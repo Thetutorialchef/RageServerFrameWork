@@ -1,0 +1,9 @@
+{
+
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=192.168.178.76;Database=RageMPServerFramework;Uid=ragemp;Pwd=SumbaBumba568;SSLMode=none;"
+  },
+  "DataVars": {
+    "MaxCharacters": 3
+  }
+  }

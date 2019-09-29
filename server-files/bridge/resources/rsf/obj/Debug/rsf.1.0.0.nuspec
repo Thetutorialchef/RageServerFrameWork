@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>rsf</id>
+    <version>1.0.0</version>
+    <authors>rsf</authors>
+    <owners>rsf</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework=".NETCoreApp2.2">
+        <dependency id="Microsoft.EntityFrameworkCore" version="2.2.6" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Configuration" version="2.2.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Configuration.Abstractions" version="2.2.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Configuration.Json" version="2.2.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="2.2.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="2.2.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging" version="2.2.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Console" version="2.2.0" exclude="Build,Analyzers" />
+        <dependency id="MySql.Data" version="8.0.17" exclude="Build,Analyzers" />
+        <dependency id="NLog" version="4.6.6" exclude="Build,Analyzers" />
+        <dependency id="NLog.Config" version="4.6.6" exclude="Build,Analyzers" />
+        <dependency id="NLog.Extensions.Logging" version="1.5.2" exclude="Build,Analyzers" />
+        <dependency id="NLog.Schema" version="4.6.6" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="12.0.2" exclude="Build,Analyzers" />
+        <dependency id="Pomelo.EntityFrameworkCore.MySql" version="2.2.0" exclude="Build,Analyzers" />
+        <dependency id="Pomelo.EntityFrameworkCore.MySql.Design" version="1.1.2" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Z:\Workspace\GameDev\new\2019\RageMP\server-files\bridge\resources\rsf\compiled\netcoreapp2.2\rsf.runtimeconfig.json" target="lib\netcoreapp2.2\rsf.runtimeconfig.json" />
+    <file src="Z:\Workspace\GameDev\new\2019\RageMP\server-files\bridge\resources\rsf\compiled\netcoreapp2.2\rsf.dll" target="lib\netcoreapp2.2\rsf.dll" />
+  </files>
+</package>

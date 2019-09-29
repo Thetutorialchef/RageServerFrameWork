@@ -1,0 +1,81 @@
+Initializing Bootstrapper.dll (0.3.7.0)..
+-> SERVER STARTED AT 28.09.2019 22:48:22
+Loaded 451 entries from vehicleData.json
+Loading resources..
+-> Starting rsf resource..
+rsf: setting as Gamemode resource
+rsf: loading scripts.. found 2 script(s)
+rsf: instantiating rsf.Main..
+rsf: instantiating rsf.Managers.DimensionManager..
+rsf: instantiating rsf.Auth.Login..
+rsf: loading server events.. found 1 server event(s)
+rsf: loading server events.. found 1 server event(s)
+rsf: loading server events.. found 1 server event(s)
+rsf: loaded 3 server events(s)
+rsf: loading commands.. found 1 command(s)
+rsf: loaded 1 commands(s)
+rsf: loading remote events.. found 2 remote event(s)
+rsf: loaded 2 remote event(s)
+-> Resource rsf started!
+Started! Waiting for connections..
+Initializing Bootstrapper.dll (0.3.7.0)..
+-> SERVER STARTED AT 28.09.2019 22:51:24
+Loaded 451 entries from vehicleData.json
+Loading resources..
+-> Starting rsf resource..
+rsf: setting as Gamemode resource
+rsf: loading scripts.. found 2 script(s)
+rsf: instantiating rsf.Main..
+rsf: instantiating rsf.Managers.DimensionManager..
+rsf: instantiating rsf.Auth.Login..
+rsf: loading server events.. found 1 server event(s)
+rsf: loading server events.. found 1 server event(s)
+rsf: loading server events.. found 1 server event(s)
+rsf: loaded 3 server events(s)
+rsf: loading commands.. found 1 command(s)
+rsf: loaded 1 commands(s)
+rsf: loading remote events.. found 2 remote event(s)
+rsf: loaded 2 remote event(s)
+-> Resource rsf started!
+Started! Waiting for connections..
+Initializing Bootstrapper.dll (0.3.7.0)..
+-> SERVER STARTED AT 28.09.2019 23:05:27
+Loaded 451 entries from vehicleData.json
+Loading resources..
+-> Starting rsf resource..
+rsf: setting as Gamemode resource
+rsf: loading scripts.. found 2 script(s)
+rsf: instantiating rsf.Main..
+rsf: instantiating rsf.Managers.DimensionManager..
+rsf: instantiating rsf.Auth.Login..
+rsf: loading server events.. found 1 server event(s)
+rsf: loading server events.. found 1 server event(s)
+rsf: loading server events.. found 1 server event(s)
+rsf: loaded 3 server events(s)
+rsf: loading commands.. found 1 command(s)
+rsf: loaded 1 commands(s)
+rsf: loading remote events.. found 2 remote event(s)
+rsf: loaded 2 remote event(s)
+-> Resource rsf started!
+Started! Waiting for connections..
+Initializing Bootstrapper.dll (0.3.7.0)..
+-> SERVER STARTED AT 28.09.2019 23:10:16
+Loaded 451 entries from vehicleData.json
+Loading resources..
+-> Starting rsf resource..
+rsf: setting as Gamemode resource
+rsf: loading scripts.. found 2 script(s)
+rsf: instantiating rsf.Main..
+rsf: instantiating rsf.Managers.DimensionManager..
+rsf: instantiating rsf.Auth.Login..
+rsf: loading server events.. found 1 server event(s)
+rsf: loading server events.. found 1 server event(s)
+rsf: loading server events.. found 1 server event(s)
+rsf: loaded 3 server events(s)
+rsf: loading commands.. found 1 command(s)
+rsf: loaded 1 commands(s)
+rsf: loading remote events.. found 2 remote event(s)
+rsf: loaded 2 remote event(s)
+-> Resource rsf started!
+Started! Waiting for connections..
+a null

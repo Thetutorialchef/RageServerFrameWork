@@ -1,0 +1,72 @@
+
+==================[28.09.2019 22:53:12]==================
+System.IO.FileNotFoundException: Could not load the specified file.
+File name: 'Microsoft.EntityFrameworkCore.resources'
+   at Assembly System.Runtime.Loader.AssemblyLoadContext.ResolveUsingEvent(AssemblyName assemblyName)
+=========================================================
+
+==================[28.09.2019 22:53:12]==================
+System.IO.FileNotFoundException: Could not load the specified file.
+File name: 'Microsoft.EntityFrameworkCore.resources'
+   at Assembly System.Runtime.Loader.AssemblyLoadContext.ResolveUsingEvent(AssemblyName assemblyName)
+=========================================================
+
+==================[28.09.2019 22:53:27]==================
+System.IO.FileNotFoundException: Could not load the specified file.
+File name: 'Microsoft.EntityFrameworkCore.Relational.resources'
+   at Assembly System.Runtime.Loader.AssemblyLoadContext.ResolveUsingEvent(AssemblyName assemblyName)
+=========================================================
+
+==================[28.09.2019 22:53:27]==================
+System.IO.FileNotFoundException: Could not load the specified file.
+File name: 'Microsoft.EntityFrameworkCore.Relational.resources'
+   at Assembly System.Runtime.Loader.AssemblyLoadContext.ResolveUsingEvent(AssemblyName assemblyName)
+=========================================================
+
+==================[28.09.2019 23:06:27]==================
+System.IO.FileNotFoundException: Could not load the specified file.
+File name: 'Microsoft.EntityFrameworkCore.resources'
+   at Assembly System.Runtime.Loader.AssemblyLoadContext.ResolveUsingEvent(AssemblyName assemblyName)
+=========================================================
+
+==================[28.09.2019 23:06:28]==================
+System.IO.FileNotFoundException: Could not load the specified file.
+File name: 'Microsoft.EntityFrameworkCore.resources'
+   at Assembly System.Runtime.Loader.AssemblyLoadContext.ResolveUsingEvent(AssemblyName assemblyName)
+=========================================================
+
+==================[28.09.2019 23:06:54]==================
+System.IO.FileNotFoundException: Could not load the specified file.
+File name: 'Microsoft.EntityFrameworkCore.Relational.resources'
+   at Assembly System.Runtime.Loader.AssemblyLoadContext.ResolveUsingEvent(AssemblyName assemblyName)
+=========================================================
+
+==================[28.09.2019 23:06:54]==================
+System.IO.FileNotFoundException: Could not load the specified file.
+File name: 'Microsoft.EntityFrameworkCore.Relational.resources'
+   at Assembly System.Runtime.Loader.AssemblyLoadContext.ResolveUsingEvent(AssemblyName assemblyName)
+=========================================================
+
+==================[28.09.2019 23:12:08]==================
+System.IO.FileNotFoundException: Could not load the specified file.
+File name: 'Microsoft.EntityFrameworkCore.resources'
+   at Assembly System.Runtime.Loader.AssemblyLoadContext.ResolveUsingEvent(AssemblyName assemblyName)
+=========================================================
+
+==================[28.09.2019 23:12:09]==================
+System.IO.FileNotFoundException: Could not load the specified file.
+File name: 'Microsoft.EntityFrameworkCore.resources'
+   at Assembly System.Runtime.Loader.AssemblyLoadContext.ResolveUsingEvent(AssemblyName assemblyName)
+=========================================================
+
+==================[28.09.2019 23:12:26]==================
+System.IO.FileNotFoundException: Could not load the specified file.
+File name: 'Microsoft.EntityFrameworkCore.Relational.resources'
+   at Assembly System.Runtime.Loader.AssemblyLoadContext.ResolveUsingEvent(AssemblyName assemblyName)
+=========================================================
+
+==================[28.09.2019 23:12:26]==================
+System.IO.FileNotFoundException: Could not load the specified file.
+File name: 'Microsoft.EntityFrameworkCore.Relational.resources'
+   at Assembly System.Runtime.Loader.AssemblyLoadContext.ResolveUsingEvent(AssemblyName assemblyName)
+=========================================================
