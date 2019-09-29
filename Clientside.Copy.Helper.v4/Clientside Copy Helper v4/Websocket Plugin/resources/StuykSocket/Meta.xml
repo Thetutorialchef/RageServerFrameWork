@@ -1,5 +1,0 @@
-<meta>
-  <info name="StuykSocket" author="Stuyk" type="script" />
-  <script src="StuykSocket.dll"/>
-  <export class="StuykSocket" event="onSocketMessageRecieved" />
-</meta>
