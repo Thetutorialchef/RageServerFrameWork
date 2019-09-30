@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace rsf.Models
 {
     public class FractionModel
     {
-        [Key]
-        public int FractionID { get; set; }
+        [Key] public uint Id { get; set; }
 
         public string Name { get; set; }
 
-        public int FractionLeaderID { get; set; }
+        public int FractionLeaderId { get; set; }
     }
 }

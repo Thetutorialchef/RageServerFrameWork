@@ -1,56 +1,49 @@
-﻿using GTANetworkAPI;
-using rsf.Database;
-using rsf.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using GTANetworkAPI;
+using rsf.Database;
+using rsf.Managers;
+using rsf.Models;
 
 namespace rsf.Auth
 {
-    class Login : Script
+    internal class Login : Script
     {
         [ServerEvent(Event.PlayerConnected)]
         public void OnPlayerConnected(Client player)
         {
-
             using (var ctx = new DefaultDbContext())
             {
                 var user = ctx.Accounts.FirstOrDefault(x => x.SocialClubName == player.SocialClubName);
-                NAPI.Util.ConsoleOutput($"a {NAPI.Util.ToJson(user)}");
                 if (user != null)
                 {
-                    user.IP = player.Address;
-                    NAPI.Data.SetEntityData(player, "User", user);
-                    NAPI.ClientEvent.TriggerClientEvent(player, "ShowCharacterSelection");
-
+                    user.Ip = player.Address;
+                    player.SetData("User", user);
+                    player.TriggerEvent("ShowCharacterSelection");
                     ctx.SaveChanges();
-
                 }
                 else
                 {
-                    Dictionary<string, string> pData = new Dictionary<string, string>()
-                            {
-                                {"name", player.Name },
-                                {"socialClub", player.SocialClubName }
-                            };
-                    player.TriggerEvent("ShowLoginForm", NAPI.Util.ToJson(pData));
-                  //  NAPI.ClientEvent.TriggerClientEvent(player, "ShowLoginForm", NAPI.Util.ToJson(pData));
+                    player.TriggerEvent("ShowLoginForm", NAPI.Util.ToJson(new Dictionary<string, string>
+                    {
+                        {"name", player.Name},
+                        {"socialClub", player.SocialClubName}
+                    }));
                 }
-
-
             }
-            uint dimension = Managers.DimensionManager.RequestPrivateDimension(player);
-            NAPI.Entity.SetEntityDimension(player, dimension);
+
+            player.Dimension = DimensionManager.RequestPrivateDimension(player);
         }
 
         #region Login
+
         [RemoteEvent("LoginAttempt")]
         public void LoginAttempt(Client player, object[] arguments)
         {
-            string username = (string)arguments[0];
-            string password = Encrypt((string)arguments[1]);
+            var username = (string) arguments[0];
+            var password = Encrypt((string) arguments[1]);
 
             using (var ctx = new DefaultDbContext())
             {
@@ -58,15 +51,16 @@ namespace rsf.Auth
                 if (user != null)
                 {
                     user.SocialClubName = player.SocialClubName;
-                    NAPI.Data.SetEntityData(player, "User", user);
-                    NAPI.ClientEvent.TriggerClientEvent(player, "ShowCharacterSelection");
+                    player.SetData("User", user);
+                    player.TriggerEvent("ShowCharacterSelection");
                 }
                 else
                 {
-                    NAPI.ClientEvent.TriggerClientEvent(player, "LoginError", "LoginDaten Incorrect.");
+                    player.TriggerEvent("LoginError", "LoginDaten Incorrect.");
                 }
             }
         }
+
         #endregion
 
         #region Register
@@ -74,40 +68,43 @@ namespace rsf.Auth
         [RemoteEvent("RegisterAttempt")]
         public void RegisterAttempt(Client player, object[] arguments)
         {
-            string username = (string)arguments[0];
-            string password = Encrypt((string)arguments[1]);
-            string emailadd = (string)arguments[2];
+            var username = (string) arguments[0];
+            var password = Encrypt((string) arguments[1]);
+            var emailadd = (string) arguments[2];
 
             using (var ctx = new DefaultDbContext())
             {
                 var user = ctx.Accounts.FirstOrDefault(x => x.Username == username);
                 if (user == null)
                 {
-                    user = new AccountModel { Username = username, Password = password, Email = emailadd, SocialClubName = player.SocialClubName, IP = player.Address };
+                    user = new AccountModel
+                    {
+                        Username = username, Password = password, Email = emailadd,
+                        SocialClubName = player.SocialClubName, Ip = player.Address
+                    };
                     ctx.Accounts.Add(user);
-
-                    NAPI.Data.SetEntityData(player, "User", user);
-                    NAPI.ClientEvent.TriggerClientEvent(player, "ShowCharacterSelection");
+                    player.SetData("User", user);
+                    player.TriggerEvent("ShowCharacterSelection");
 
                     ctx.SaveChanges();
                 }
                 else
                 {
-                    NAPI.ClientEvent.TriggerClientEvent(player, "LoginError", "LoginDaten falsch");
+                    player.TriggerEvent("LoginError", "LoginDaten falsch");
                 }
             }
         }
+
         #endregion
 
 
-        public static String Encrypt(String value)
+        public static string Encrypt(string value)
         {
-            using (SHA256 hash = SHA256Managed.Create())
+            using (var hash = SHA256.Create())
             {
-                return String.Concat(hash.ComputeHash(Encoding.UTF8.GetBytes(value)).Select(item => item.ToString("x2")));
+                return string.Concat(
+                    hash.ComputeHash(Encoding.UTF8.GetBytes(value)).Select(item => item.ToString("x2")));
             }
         }
-
     }
 }
-        

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace rsf.Data
+﻿namespace rsf.Data
 {
     public enum JobType
     {

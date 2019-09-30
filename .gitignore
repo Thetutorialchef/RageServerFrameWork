@@ -2,4 +2,7 @@
 # Diese .gitignore-Datei wurde von Microsoft(R) Visual Studio automatisch erstellt.
 ################################################################################
 
-/server-files/bridge/resources/rsf/obj/Debug/netcoreapp3.0/rsf.AssemblyInfo.cs
+/server-files/bridge/resources/rsf/obj/*
+/server-files/bridge/resources/rsf/obj/Debug/*
+/server-files/bridge/resources/rsf/obj/Debug/netcoreapp2.2/*
+/.vs

@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace rsf.Data
+﻿namespace rsf.Data
 {
     public enum WhiteListedJobType
     {
         None,
-        police,
-        medic,
-        mechanic,
+        Police,
+        Medic,
+        Mechanic,
         Taxidriver,
         Military,
         Swat,

@@ -1,22 +1,23 @@
-﻿using GTANetworkAPI;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using GTANetworkAPI;
 
 namespace rsf.Managers
 {
     public class DimensionManager : Script
     {
-        private static Dictionary<uint, Client> DimensionsInUse = new Dictionary<uint, Client>();
+        private static readonly Dictionary<uint, Client> DimensionsInUse = new Dictionary<uint, Client>();
 
         [ServerEvent(Event.PlayerDisconnected)]
         public void OnPlayerDisconnected(Client player, DisconnectionType type, string reason)
         {
-            NAPI.Util.ConsoleOutput("1");
-            if (DimensionsInUse.ContainsValue(player))
-                DismissPrivateDimension(player);
-            NAPI.Util.ConsoleOutput("2");
+            //NAPI.Util.ConsoleOutput("1");
+            lock (DimensionsInUse)
+            {
+                if (DimensionsInUse.ContainsValue(player))
+                    DismissPrivateDimension(player);
+            }
+            //NAPI.Util.ConsoleOutput("2");
         }
 
         public static uint RequestPrivateDimension(Client requester)
@@ -31,6 +32,7 @@ namespace rsf.Managers
 
                 DimensionsInUse.Add(firstUnusedDim, requester);
             }
+
             return firstUnusedDim;
         }
 
@@ -38,11 +40,9 @@ namespace rsf.Managers
         {
             lock (DimensionsInUse)
             {
-                for (int i = DimensionsInUse.Count - 1; i >= 0; i--)
-                {
+                for (var i = DimensionsInUse.Count - 1; i >= 0; i--)
                     if (DimensionsInUse.ElementAt(i).Value == requester)
                         DimensionsInUse.Remove(DimensionsInUse.ElementAt(i).Key);
-                }
             }
         }
     }

@@ -1,19 +1,17 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NLog.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace rsf.Services
 {
-   public class ConfigurationService
+    public class ConfigurationService
     {
         public ServiceProvider ServiceProvider { get; private set; }
 
         public static ConfigurationService CreateInstance()
         {
-            return CreateInstance((s) => { });
+            return CreateInstance(s => { });
         }
 
         public static ConfigurationService CreateInstance(Action<IServiceCollection> handler)
@@ -30,17 +28,16 @@ namespace rsf.Services
         // Server Config file load
         private static IServiceCollection CreateDefaultSericeDescriptors()
         {
-            var Configuration = new ConfigurationBuilder()
-            .AddJsonFile("config.json")
-           // .AddJsonFile("worldserver/json/worldserver.json")
-            .Build();
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("config.json")
+                // .AddJsonFile("worldserver/json/worldserver.json")
+                .Build();
 
             IServiceCollection serviceDescriptors = new ServiceCollection();
             serviceDescriptors.AddLogging(b => b.AddNLog());
-            serviceDescriptors.AddSingleton<IConfigurationRoot>(Configuration);
+            serviceDescriptors.AddSingleton(configuration);
 
             return serviceDescriptors;
         }
     }
 }
-

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace rsf.Models
 {
-   public class RoleModel
+    public class RoleModel
     {
-        [Key]
-        public int RoleID { get; set; }
+        [Key] public uint Id { get; set; }
 
         public string Name { get; set; }
     }

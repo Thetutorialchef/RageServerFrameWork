@@ -10,7 +10,6 @@
   },
   "compileOnSave": true,
   "files": [
-    "Auth/Login.ts",
-
+    "Auth/Login.ts"
   ]
 }

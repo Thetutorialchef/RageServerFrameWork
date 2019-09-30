@@ -19,48 +19,156 @@ namespace rsf.Migrations
 
             modelBuilder.Entity("rsf.Models.AccountModel", b =>
                 {
-                    b.Property<int>("UserID")
+                    b.Property<uint>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Banned");
-
-                    b.Property<DateTime>("BeginBannedTime");
 
                     b.Property<string>("Email");
 
-                    b.Property<DateTime>("EndBannedTime");
+                    b.Property<DateTime?>("EndBannedTime");
 
                     b.Property<string>("ForumName");
 
-                    b.Property<string>("IP");
+                    b.Property<string>("Ip");
 
                     b.Property<int>("MaxCharacters");
 
                     b.Property<string>("Password");
 
-                    b.Property<int>("PermBanned");
-
-                    b.Property<int>("RoleID");
+                    b.Property<int>("RoleId");
 
                     b.Property<string>("SocialClubName");
 
-                    b.Property<string>("TeamSpeakUniqueID");
+                    b.Property<string>("TeamSpeakUniqueId");
 
                     b.Property<string>("Username");
 
                     b.Property<int>("WhiteListed");
 
-                    b.HasKey("UserID");
+                    b.HasKey("Id");
 
                     b.ToTable("Accounts");
                 });
 
+            modelBuilder.Entity("rsf.Models.CharacterDatenModel", b =>
+                {
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<byte>("AddBodyBlemish");
+
+                    b.Property<byte>("Ageing");
+
+                    b.Property<float>("AgeingOpacity");
+
+                    b.Property<byte>("AgeingPrimaryColor");
+
+                    b.Property<byte>("AgeingSecondaryColor");
+
+                    b.Property<byte>("Blemish");
+
+                    b.Property<float>("BlemishOpacity");
+
+                    b.Property<byte>("BlemishPrimaryColor");
+
+                    b.Property<byte>("BlemishSecondaryColor");
+
+                    b.Property<byte>("Blush");
+
+                    b.Property<float>("BlushOpacity");
+
+                    b.Property<byte>("BlushPrimaryColor");
+
+                    b.Property<byte>("BlushSecondaryColor");
+
+                    b.Property<byte>("BodyBlemish");
+
+                    b.Property<float>("BodyBlemishOpacity");
+
+                    b.Property<byte>("BodyBlemishPrimaryColor");
+
+                    b.Property<byte>("BodyBlemishSecondaryColor");
+
+                    b.Property<uint>("CharacterModelId");
+
+                    b.Property<byte>("ChestHair");
+
+                    b.Property<float>("ChestHairOpacity");
+
+                    b.Property<byte>("ChestHairPrimaryColor");
+
+                    b.Property<byte>("ChestHairSecondaryColor");
+
+                    b.Property<byte>("Complexion");
+
+                    b.Property<float>("ComplexionOpacity");
+
+                    b.Property<byte>("ComplexionPrimaryColor");
+
+                    b.Property<byte>("ComplexionSecondaryColor");
+
+                    b.Property<byte>("Eyebrows");
+
+                    b.Property<float>("EyebrowsOpacity");
+
+                    b.Property<byte>("EyebrowsPrimaryColor");
+
+                    b.Property<byte>("EyebrowsSecondaryColor");
+
+                    b.Property<byte>("FacialHair");
+
+                    b.Property<float>("FacialHairOpacity");
+
+                    b.Property<byte>("FacialHairPrimaryColor");
+
+                    b.Property<byte>("FacialHairSecondaryColor");
+
+                    b.Property<byte>("Lipstick");
+
+                    b.Property<float>("LipstickOpacity");
+
+                    b.Property<byte>("LipstickPrimaryColor");
+
+                    b.Property<byte>("LipstickSecondaryColor");
+
+                    b.Property<byte>("Makeup");
+
+                    b.Property<float>("MakeupOpacity");
+
+                    b.Property<byte>("MakeupPrimaryColor");
+
+                    b.Property<byte>("MakeupSecondaryColor");
+
+                    b.Property<byte>("Moles");
+
+                    b.Property<float>("MolesOpacity");
+
+                    b.Property<byte>("MolesPrimaryColor");
+
+                    b.Property<byte>("MolesSecondaryColor");
+
+                    b.Property<byte>("SunDamage");
+
+                    b.Property<float>("SunDamageOpacity");
+
+                    b.Property<byte>("SunDamagePrimaryColor");
+
+                    b.Property<byte>("SunDamageSecondaryColor");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CharacterModelId");
+
+                    b.ToTable("CharacterDaten");
+                });
+
             modelBuilder.Entity("rsf.Models.CharacterModel", b =>
                 {
-                    b.Property<int>("CharID")
+                    b.Property<uint>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccountBalance");
+
+                    b.Property<uint>("AccountModelId");
 
                     b.Property<double>("Bank");
 
@@ -70,40 +178,46 @@ namespace rsf.Migrations
 
                     b.Property<int>("Jailtime");
 
-                    b.Property<int>("JobID");
+                    b.Property<int>("JobId");
 
                     b.Property<int>("JobRank");
 
                     b.Property<double>("Money");
 
-                    b.Property<string>("NachName");
+                    b.Property<string>("Nachname");
 
-                    b.Property<int>("RoleID");
+                    b.Property<int>("OnDuty");
+
+                    b.Property<int>("RoleId");
 
                     b.Property<int>("Sex");
 
-                    b.Property<int>("UserID");
+                    b.Property<string>("Vorname");
 
-                    b.Property<string>("VorName");
-
-                    b.Property<int>("WJobID");
+                    b.Property<int>("WJobId");
 
                     b.Property<int>("Wantedlevel");
 
-                    b.Property<int>("onDuty");
+                    b.HasKey("Id");
 
-                    b.HasKey("CharID");
-
-                    b.HasIndex("UserID");
+                    b.HasIndex("AccountModelId");
 
                     b.ToTable("Characters");
                 });
 
+            modelBuilder.Entity("rsf.Models.CharacterDatenModel", b =>
+                {
+                    b.HasOne("rsf.Models.CharacterModel", "CharacterModel")
+                        .WithMany()
+                        .HasForeignKey("CharacterModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("rsf.Models.CharacterModel", b =>
                 {
-                    b.HasOne("rsf.Models.AccountModel")
+                    b.HasOne("rsf.Models.AccountModel", "AccountModel")
                         .WithMany("Characters")
-                        .HasForeignKey("UserID")
+                        .HasForeignKey("AccountModelId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

@@ -1,24 +1,20 @@
-﻿using rsf.Data;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
+using rsf.Data;
 
 namespace rsf.Models
 {
-   public class CharacterModel
+    public class CharacterModel
     {
-        [Key]
-        public int CharID { get; set; }
-        public string VorName { get; set; }
+        [Key] public uint Id { get; set; }
+        public uint AccountModelId { get; set; }
 
-        public string NachName { get; set; }
+        public string Vorname { get; set; }
 
-        public int UserID { get; set; }
+        public string Nachname { get; set; }
 
         public int Dead { get; set; }
 
-        public int RoleID { get; set; } // Anderer Name für "Rollen / Status" Zivilist, WhiteListedJobs  
+        public int RoleId { get; set; } // Anderer Name für "Rollen / Status" Zivilist, WhiteListedJobs  
 
         public int AccountBalance { get; set; }
 
@@ -26,11 +22,13 @@ namespace rsf.Models
 
         public int JobRank { get; set; } // z.b. Chef, Azubi, Angestellter
 
-        public WhiteListedJobType WJobID { get; set; } // WhiteListed Jobs --- Enum muss zur Enum Class umgenannt werden
+        public WhiteListedJobType WJobId { get; set; } // WhiteListed Jobs --- Enum muss zur Enum Class umgenannt werden
 
         public int OnDuty { get; set; }
 
-        public JobType JobID { get; set; } /// Non WhiteListed Jobs 
+        public JobType JobId { get; set; }
+
+        /// Non WhiteListed Jobs
 
         public int Jail { get; set; }
 
@@ -42,13 +40,8 @@ namespace rsf.Models
 
         public int Wantedlevel { get; set; }
 
+        public AccountModel AccountModel { get; set; }
 
-    // public double[] LastLocation { get; set; } = new double[] { -1167.994, -700.4285, 21.89281 }; // Letzte Position
-        
-      
-
-
-
-
+        // public double[] LastLocation { get; set; } = new double[] { -1167.994, -700.4285, 21.89281 }; // Letzte Position
     }
 }

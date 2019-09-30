@@ -1,10 +1,15 @@
-﻿using GTANetworkAPI;
-using System;
+﻿using System;
+using GTANetworkAPI;
 
 namespace rsf
 {
     public class Main : Script
     {
+        public Main()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+        }
+
         [ServerEvent(Event.ResourceStart)]
         public void ResourceStart()
         {
@@ -22,24 +27,13 @@ namespace rsf
             NAPI.Server.SetAutoSpawnOnConnect(false);
             NAPI.Server.SetAutoRespawnAfterDeath(false);
 
-          //  NAPI.Server.SetCommandErrorMessage("[~r~SERVER:~w~] Dieser Command Existiert nicht!");
-        }
-
-
-
-
-
-        public Main()
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-
+            //  NAPI.Server.SetCommandErrorMessage("[~r~SERVER:~w~] Dieser Command Existiert nicht!");
         }
 
         [Command("test")]
-       public void CMD_Test(Client client)
-       {
-         client.SendChatMessage("Hello there!");
-       }
-
+        public void CMD_Test(Client client)
+        {
+            client.SendChatMessage("Hello there!");
+        }
     }
 }
