@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using GTANetworkAPI;
 
 namespace rsf.Models
 {
@@ -17,5 +19,7 @@ namespace rsf.Models
         public int RoleId { get; set; }
         public int MaxCharacters { get; set; } = 1;
         public virtual ICollection<CharacterModel> Characters { get; set; }
+        [NotMapped]
+        public Client Player { get; set; }
     }
 }

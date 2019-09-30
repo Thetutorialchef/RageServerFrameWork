@@ -5,9 +5,7 @@
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="../css/bootstrap-grid.css" />
     <link rel="stylesheet" type="text/css" href="../css/base.css">
-    <link rel="stylesheet" type="text/css" href="../fonts/dir.css" />
-    <link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
-    
+    <link rel="stylesheet" type="text/css" href="../css/fontawesome.min.css">
 </head>
 
 <body>
@@ -34,7 +32,7 @@
                             </div>
                             <div class="column dark">
                                 <button type="button" id="login-button" class="btn btn-primary btn-block"/>Einloggen</button>
-                                <button type="button" id="register-switch-button" class="btn btn-success btn-block"/>Registrieren</button>
+                                <a href="register.html" id="register-switch-button" class="btn btn-success btn-block"/>Registrieren</a>
                             </div>
                             <center><small>Version 0.0.1 - RSF</small></center>
                         </form>
@@ -55,12 +53,8 @@
             var username = $("#username").val();
             var password = $("#password").val();
 
-            if (username.length < 1) {
-                ShowError("Benutzerdaten sind falsch.");
-            }
-
-            else if (password.length < 1) {
-                ShowError("Benutzerdaten sind falsch.");
+            if (username.length === 0 || password.length === 0) {
+                ShowError("Bitte fülle alle Felder aus.");
             }
 
             else {

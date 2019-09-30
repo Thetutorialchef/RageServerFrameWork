@@ -5,8 +5,7 @@
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="../css/bootstrap-grid.css" />
     <link rel="stylesheet" type="text/css" href="../css/base.css">
-    <link rel="stylesheet" type="text/css" href="../fonts/dir.css" />
-    <link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/fontawesome.min.css">
 </head>
 
 <body>
@@ -16,7 +15,7 @@
                 <div class="logincontainer" >
                         <div class="notification info">
                                  <span>
-                                   <marquee><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Herzlich Willkommen bei DreamLife RP <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Wenn Ihr fragen habt dann joint unseren Discord auf unserer Seite https://dl-rp.de</marquee>
+                                   <marquee><i class="fa fa-exclamation-circle"></i> Herzlich Willkommen bei DreamLife RP <i class="fas fa-exclamation-circle"></i> Wenn Ihr fragen habt dann joint unseren Discord auf unserer Seite https://dl-rp.de</marquee>
                             </span>
                             </div>
                     <header>
@@ -26,25 +25,25 @@
                     <div class="alert alert-danger" id="errorMessage"></div>
                         <form>
                             <div class="column">
-                                <center><b><i class="fa fa-user-circle" aria-hidden="true"></i> Username:</b></center>
+                                <center><b><i class="fa fa-user-circle"></i> Benutzername:</b></center>
                                 <input type="text" class="form-control" placeholder="Benutzername" id="username" style="text-align: center;" />
                             </div>
                             <div class="column dark">
-                                <center><b><i class="fa fa-at" aria-hidden="true"></i> E-mail:</b></center>
+                                <center><b><i class="fa fa-at"></i> E-mail:</b></center>
                                 <input type="mail" id="email" class="form-control" placeholder="E-Mail Adresse" style="text-align: center;" />
                             </div>
                             <div class="column dark">
-                                <center><b><i class="fa fa-unlock" aria-hidden="true"></i> Passwort:</b></center>
+                                <center><b><i class="fa fa-unlock"></i> Passwort:</b></center>
                                 <input type="password" id="password" class="form-control" placeholder="Passwort" style="text-align: center;" />
                             </div>
                             <div class="column dark">
-                                <center><b><i class="fa fa-lock" aria-hidden="true"></i> Passwort Bestätigen:</b></center>
+                                <center><b><i class="fa fa-lock"></i> Passwort Bestätigen:</b></center>
                                 <input type="password" id="repassword" class="form-control" placeholder="Passwort bestätigen" style="text-align: center;" />
                             </div>
 
                             <div class="column dark">
                                 <button type="button" id="register-button" class="btn btn-success btn-block">Registrieren</button>
-                                <button type="button" id="login-switch-button" class="btn btn-primary btn-block"/>Du Bist schon Registriert? Dann klick hier</button>
+                                <a href="login.html" id="login-switch-button" class="btn btn-primary btn-block"/>Du Bist schon Registriert? Dann klick hier</a>
                             </div>
                         </form>
                         <center><small>Rage Server Framework v0.1</small></center>
@@ -68,19 +67,13 @@
             var email = $("#email").val();
             var pattern = new RegExp("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
-             if (password.length < 4 || password.length > 16) {
-                ShowError("Das Passwort muss zwischen 4 und 16 Zeichen langsein.");
-            }
-
-            else if (password != repassword) {
-                ShowError("Password stimmt nicht überein");
-            }
-
-            else if (!pattern.test(email)) {
-                ShowError("Unbekannte Email Adresse");
-            }
-
-            else {
+			if (password.length < 4 || password.length > 16) {
+                ShowError("Das Passwort muss zwischen 4 und 16 Zeichen lang sein.");
+            } else if (password != repassword) {
+                ShowError("Password stimmt nicht überein.");
+            } else if (!pattern.test(email)) {
+                ShowError("Unbekannte Email Adresse.");
+            } else {
                 mp.trigger('cef:register', password, email);
             }
         });

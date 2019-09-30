@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using BCrypt;
 using GTANetworkAPI;
 using rsf.Database;
@@ -13,27 +10,19 @@ namespace rsf.Auth
 {
     internal class Login : Script
     {
+        [ServerEvent(Event.PlayerDisconnected)]
+        public void Disconnect(Client player, DisconnectionType type, string reason)
+        {
+            NAPI.Util.ConsoleOutput($"{player.Name} hat den Server verlassen.");
+        }
+
         [ServerEvent(Event.PlayerConnected)]
         public void OnPlayerConnected(Client player)
         {
             NAPI.Util.ConsoleOutput($"{player.Name} ist gejoint.");
             using (var ctx = new DefaultDbContext())
             {
-                var user = ctx.Accounts.FirstOrDefault(x => x.SocialClubName == player.SocialClubName);
-                if (user != null)
-                {
-                    user.Ip = player.Address;
-                    player.SetData("User", user);
-                    player.TriggerEvent("ShowCharacterSelection");
-                    ctx.SaveChanges();
-                }
-                else
-                {
-                    player.TriggerEvent("ShowLoginForm", NAPI.Util.ToJson(new Dictionary<string, string>
-                    {
-                        {"socialClub", player.SocialClubName}
-                    }));
-                }
+                player.TriggerEvent("ShowLoginForm", ctx.Accounts.Count(t => string.Equals(t.SocialClubName, player.SocialClubName, StringComparison.CurrentCultureIgnoreCase)) == 1);
             }
 
             player.Dimension = DimensionManager.RequestPrivateDimension(player);
@@ -48,10 +37,11 @@ namespace rsf.Auth
             var user = ctx.Accounts.FirstOrDefault(up => string.Equals(up.SocialClubName, player.SocialClubName, StringComparison.CurrentCultureIgnoreCase));
             if (user == null || !BCryptHelper.CheckPassword((string)arguments[0], user.Password))
             {
-                player.TriggerEvent("LoginError", "LoginDaten Incorrect.");
+                player.TriggerEvent("AuthError", "Der Benutzername oder das Passwort ist falsch.");
                 return;
             }
 
+            user.Player = player;
             user.SocialClubName = player.SocialClubName;
             player.SetData("User", user);
             player.TriggerEvent("ShowCharacterSelection");
@@ -65,24 +55,25 @@ namespace rsf.Auth
         public void RegisterAttempt(Client player, object[] arguments)
         {
             using var ctx = new DefaultDbContext();
-            if (ctx.Accounts.Count(t => string.Equals(t.SocialClubName, player.SocialClubName, StringComparison.CurrentCultureIgnoreCase)) == 0)
+            if (ctx.Accounts.Count(t => string.Equals(t.SocialClubName, player.SocialClubName, StringComparison.CurrentCultureIgnoreCase)) != 0)
             {
-                var user = new AccountModel
-                {
-                    Password = BCrypt.BCryptHelper.HashPassword((string)arguments[0], BCryptHelper.GenerateSalt()),
-                    Email = (string)arguments[1],
-                    SocialClubName = player.SocialClubName,
-                    Ip = player.Address
-                };
-                ctx.Accounts.Add(user);
-                player.SetData("User", user);
-                player.TriggerEvent("ShowCharacterSelection");
-                ctx.SaveChanges();
+                player.TriggerEvent("AuthError", "Dieser Benutzername existiert bereits.");
+                return;
             }
-            else
+
+            var ip = player.Address.Split('.');
+            var user = new AccountModel
             {
-                player.TriggerEvent("LoginError", "LoginDaten falsch");
-            }
+                Password = BCryptHelper.HashPassword((string)arguments[0], BCryptHelper.GenerateSalt()),
+                Email = (string)arguments[1],
+                SocialClubName = player.SocialClubName,
+                Ip = $"{ip[0]}.{ip[1]}.XXX.XXX",
+                Player = player
+            };
+            ctx.Accounts.Add(user);
+            player.SetData("User", user);
+            player.TriggerEvent("ShowCharacterSelection");
+            ctx.SaveChanges();
         }
 
         #endregion

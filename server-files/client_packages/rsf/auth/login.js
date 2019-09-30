@@ -1,4 +1,4 @@
-mp.events.add('ShowLoginForm', () => {
+mp.events.add('ShowLoginForm', (login) => {
     var start_camera = mp.cameras.new("start", {x: -1483.709, y: 160.6735, z: 54.92348}, {x:0, y:0, z:-30}, 60.0);
     start_camera.pointAtCoord(-1503.526, 136.57, 55.65308);
     start_camera.setActive(true);
@@ -10,24 +10,28 @@ mp.events.add('ShowLoginForm', () => {
     mp.game.cam.renderScriptCams(true, false, 0, true, false);
     mp.players.local.position = new mp.Vector3(-1473.709, 160.6735, 54.92348);
     
-//mp.gui.chat.activate(false);
-   // mp.gui.chat.show(false);
+	//mp.gui.chat.activate(false);
+	//mp.gui.chat.show(false);
     //mp.gui.cursor.visible = true;
     
     mp.events.call('ResetCharacterCreation');
-    mp.events.call('createBrowser','rsf/assets/views/login.html');    // ['package://rsf/assets/views/login.html']);
+    mp.events.call('createBrowser', `rsf/assets/views/${login === true ? "login" : "register"}.html`);    // ['package://rsf/assets/views/login.html']);
 });
 
 mp.events.add('ShowCharacterSelection', () => {
     mp.events.call('ShowCharacterSelector');
 });
 
-mp.events.add('LoginError', (message) => {
-    mp.events.call('executeFunction', ['ShowError', message]);
+mp.events.add('AuthError', (message) => {
+    mp.events.call('executeBrowser', `ShowError('${message}')`);
+});
+
+/*mp.events.add('LoginError', (message) => {
+    mp.events.call('executeBrowser', `ShowError('${message}')`]);
 });
 mp.events.add('RegisterError', (message) => {
-    mp.events.call('executeFunction', ['ShowError', message]);
-});  
+    mp.events.call('executeBrowser', `ShowError('${message}')`]);
+});*/  
 
 mp.events.add('cef:login', (username, password) => {
     mp.events.callRemote("LoginAttempt", password);
