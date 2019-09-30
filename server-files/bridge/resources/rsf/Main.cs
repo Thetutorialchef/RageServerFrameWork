@@ -1,22 +1,17 @@
 ﻿using System;
+using System.IO;
 using GTANetworkAPI;
+using Newtonsoft.Json.Linq;
 
 namespace rsf
 {
     public class Main : Script
     {
-        public Main()
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-        }
-
+        public static JObject Config = JObject.Parse(File.ReadAllText($"{Directory.GetCurrentDirectory()}/conf.json"));
         [ServerEvent(Event.ResourceStart)]
         public void ResourceStart()
         {
-            //Console.WriteLine("(~~~~~~~~~~~~~~~~~~~~~)");
-            //Console.WriteLine("( Script by AbsturzPowa 2019)");
-            //Console.WriteLine("( Version Dev0.4.1");
-            //Console.WriteLine("(~~~~~~~~~~~~~~~~~~~~~)");
+            NAPI.Util.ConsoleOutput($"Streamrate: {(int)Config.GetValue("stream-distance")}"); // Wichtig für die Synchronisation von Sachen
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("------------------------------------------------------");
             Console.WriteLine("         RageMP Server Framework Version [0.0.1]      ");
@@ -28,12 +23,6 @@ namespace rsf
             NAPI.Server.SetAutoRespawnAfterDeath(false);
 
             //  NAPI.Server.SetCommandErrorMessage("[~r~SERVER:~w~] Dieser Command Existiert nicht!");
-        }
-
-        [Command("test")]
-        public void CMD_Test(Client client)
-        {
-            client.SendChatMessage("Hello there!");
         }
     }
 }

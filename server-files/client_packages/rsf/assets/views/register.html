@@ -59,21 +59,16 @@
         $("#errorMessage").hide();
 
         $("#login-switch-button").click(function () {
-            mp.trigger('showLoginPage', username, password, email);
+            mp.trigger('showLoginPage', password, email);
         });
 
         $("#register-button").click(function () {
-            var username = $("#username").val();
             var password = $("#password").val();
             var repassword = $("#repassword").val();
             var email = $("#email").val();
             var pattern = new RegExp("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
-            if (username.length < 4 || username.length > 12) {
-                ShowError("Der Benutzername muss zwischen 4 und 12 Zeichen haben");
-            }
-
-            else if (password.length < 4 || password.length > 16) {
+             if (password.length < 4 || password.length > 16) {
                 ShowError("Das Passwort muss zwischen 4 und 16 Zeichen langsein.");
             }
 
@@ -86,7 +81,7 @@
             }
 
             else {
-                mp.trigger('cef:register', username, password, email);
+                mp.trigger('cef:register', password, email);
             }
         });
 

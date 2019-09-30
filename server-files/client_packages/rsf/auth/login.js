@@ -30,11 +30,11 @@ mp.events.add('RegisterError', (message) => {
 });  
 
 mp.events.add('cef:login', (username, password) => {
-    mp.events.callRemote("LoginAttempt", username, password);
+    mp.events.callRemote("LoginAttempt", password);
 });
 
-mp.events.add('cef:register', (username, password, email) => {
-    mp.events.callRemote("RegisterAttempt", username, password, email);
+mp.events.add('cef:register', (password, email) => {
+    mp.events.callRemote("RegisterAttempt", password, email);
 });
 
 mp.events.add('showRegisterPage', () => {

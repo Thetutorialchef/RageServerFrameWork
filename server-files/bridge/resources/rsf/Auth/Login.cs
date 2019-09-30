@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using BCrypt;
 using GTANetworkAPI;
 using rsf.Database;
 using rsf.Managers;
@@ -14,6 +16,7 @@ namespace rsf.Auth
         [ServerEvent(Event.PlayerConnected)]
         public void OnPlayerConnected(Client player)
         {
+            NAPI.Util.ConsoleOutput($"{player.Name} ist gejoint.");
             using (var ctx = new DefaultDbContext())
             {
                 var user = ctx.Accounts.FirstOrDefault(x => x.SocialClubName == player.SocialClubName);
@@ -28,7 +31,6 @@ namespace rsf.Auth
                 {
                     player.TriggerEvent("ShowLoginForm", NAPI.Util.ToJson(new Dictionary<string, string>
                     {
-                        {"name", player.Name},
                         {"socialClub", player.SocialClubName}
                     }));
                 }
@@ -42,23 +44,17 @@ namespace rsf.Auth
         [RemoteEvent("LoginAttempt")]
         public void LoginAttempt(Client player, object[] arguments)
         {
-            var username = (string) arguments[0];
-            var password = Encrypt((string) arguments[1]);
-
-            using (var ctx = new DefaultDbContext())
+            using var ctx = new DefaultDbContext();
+            var user = ctx.Accounts.FirstOrDefault(up => string.Equals(up.SocialClubName, player.SocialClubName, StringComparison.CurrentCultureIgnoreCase));
+            if (user == null || !BCryptHelper.CheckPassword((string)arguments[0], user.Password))
             {
-                var user = ctx.Accounts.FirstOrDefault(up => up.Username == username && up.Password == password);
-                if (user != null)
-                {
-                    user.SocialClubName = player.SocialClubName;
-                    player.SetData("User", user);
-                    player.TriggerEvent("ShowCharacterSelection");
-                }
-                else
-                {
-                    player.TriggerEvent("LoginError", "LoginDaten Incorrect.");
-                }
+                player.TriggerEvent("LoginError", "LoginDaten Incorrect.");
+                return;
             }
+
+            user.SocialClubName = player.SocialClubName;
+            player.SetData("User", user);
+            player.TriggerEvent("ShowCharacterSelection");
         }
 
         #endregion
@@ -68,43 +64,27 @@ namespace rsf.Auth
         [RemoteEvent("RegisterAttempt")]
         public void RegisterAttempt(Client player, object[] arguments)
         {
-            var username = (string) arguments[0];
-            var password = Encrypt((string) arguments[1]);
-            var emailadd = (string) arguments[2];
-
-            using (var ctx = new DefaultDbContext())
+            using var ctx = new DefaultDbContext();
+            if (ctx.Accounts.Count(t => string.Equals(t.SocialClubName, player.SocialClubName, StringComparison.CurrentCultureIgnoreCase)) == 0)
             {
-                var user = ctx.Accounts.FirstOrDefault(x => x.Username == username);
-                if (user == null)
+                var user = new AccountModel
                 {
-                    user = new AccountModel
-                    {
-                        Username = username, Password = password, Email = emailadd,
-                        SocialClubName = player.SocialClubName, Ip = player.Address
-                    };
-                    ctx.Accounts.Add(user);
-                    player.SetData("User", user);
-                    player.TriggerEvent("ShowCharacterSelection");
-
-                    ctx.SaveChanges();
-                }
-                else
-                {
-                    player.TriggerEvent("LoginError", "LoginDaten falsch");
-                }
+                    Password = BCrypt.BCryptHelper.HashPassword((string)arguments[0], BCryptHelper.GenerateSalt()),
+                    Email = (string)arguments[1],
+                    SocialClubName = player.SocialClubName,
+                    Ip = player.Address
+                };
+                ctx.Accounts.Add(user);
+                player.SetData("User", user);
+                player.TriggerEvent("ShowCharacterSelection");
+                ctx.SaveChanges();
+            }
+            else
+            {
+                player.TriggerEvent("LoginError", "LoginDaten falsch");
             }
         }
 
         #endregion
-
-
-        public static string Encrypt(string value)
-        {
-            using (var hash = SHA256.Create())
-            {
-                return string.Concat(
-                    hash.ComputeHash(Encoding.UTF8.GetBytes(value)).Select(item => item.ToString("x2")));
-            }
-        }
     }
 }

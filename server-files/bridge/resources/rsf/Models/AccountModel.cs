@@ -8,8 +8,6 @@ namespace rsf.Models
     {
         [Key] public uint Id { get; set; }
         public string SocialClubName { get; set; }
-        public string ForumName { get; set; }
-        public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
         public string TeamSpeakUniqueId { get; set; }
@@ -17,7 +15,7 @@ namespace rsf.Models
         public DateTime? EndBannedTime { get; set; }
         public string Ip { get; set; }
         public int RoleId { get; set; }
-        public int MaxCharacters { get; set; }
+        public int MaxCharacters { get; set; } = 1;
         public virtual ICollection<CharacterModel> Characters { get; set; }
     }
 }

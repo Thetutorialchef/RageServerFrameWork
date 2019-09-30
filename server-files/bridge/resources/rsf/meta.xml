@@ -2,7 +2,7 @@
 
 <meta>
   <info name="RageMP Server Framework" author="Deadlyviruz" type="gamemode" lang="compiled" />
-  <script src="compiled/netcoreapp2.2/rsf.dll" />
+  <script src="rsf.dll" />
 
 
   <!-- Authentication -->

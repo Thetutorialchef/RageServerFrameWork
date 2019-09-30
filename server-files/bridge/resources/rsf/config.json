@@ -1,7 +1,8 @@
 {
   "ConnectionStrings": {
     "DefaultConnection": "Server=192.168.178.76;Database=RageMPServerFramework;Uid=ragemp;Pwd=SumbaBumba568;SSLMode=none;",
-    "MertLocalConnection": "Server=192.168.178.37;Database=rage;Uid=rage;Pwd=rage;SSLMode=none;"
+    "DockerConnection": "Server=192.168.178.40;Database=rage;Uid=rage;Pwd=rage;SSLMode=none;",
+    "MertLocalConnection": "Server=192.168.178.40;Database=rage;Uid=rage;Pwd=rage;SSLMode=none;"
   },
   "DataVars": {
     "MaxCharacters": 3

@@ -1,4 +1,5 @@
-﻿#define MertLocal
+﻿#define Docker
+#define MertLocal
 
 using System;
 using System.IO;
@@ -48,7 +49,9 @@ namespace rsf.Database
             builder.AddJsonFile($"{path}/config.json", false);
 
             var configuration = builder.Build();
-#if MertLocal
+#if Docker
+            _connectionString = configuration.GetConnectionString("DockerConnection");
+#elif MertLocal
             _connectionString = configuration.GetConnectionString("MertLocalConnection");
 #else
             _connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -96,7 +99,9 @@ namespace rsf.Database
 
             var configuration = builder.Build();
             // Get the connection string located inside the appsettings.json file under the name "DefaultConnection"
-#if MertLocal
+#if Docker
+            _connectionString = configuration.GetConnectionString("DockerConnection");
+#elif MertLocal
             _connectionString = configuration.GetConnectionString("MertLocalConnection");
 #else
             _connectionString = configuration.GetConnectionString("DefaultConnection");
