@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using rsf.Database;
 
 namespace rsf.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    partial class DefaultDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191001190930_CharacterModelRegistration")]
+    partial class CharacterModelRegistration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -176,8 +178,7 @@ namespace rsf.Migrations
 
                     b.Property<DateTime>("Geburtsdatum");
 
-                    b.Property<string>("Geburtsort")
-                        .HasColumnType("varchar(50)");
+                    b.Property<string>("Geburtsort");
 
                     b.Property<bool>("Geschlecht");
 
@@ -191,22 +192,17 @@ namespace rsf.Migrations
 
                     b.Property<double>("Money");
 
-                    b.Property<string>("Nachname")
-                        .HasColumnType("varchar(50)");
+                    b.Property<string>("Nachname");
 
                     b.Property<int>("OnDuty");
 
                     b.Property<int>("RoleId");
 
-                    b.Property<byte>("Schriftart");
-
                     b.Property<int>("Sex");
 
-                    b.Property<string>("Staatsangehoerigkeit")
-                        .HasColumnType("varchar(50)");
+                    b.Property<string>("Staatsangehoerigkeit");
 
-                    b.Property<string>("Vorname")
-                        .HasColumnType("varchar(50)");
+                    b.Property<string>("Vorname");
 
                     b.Property<int>("WJobId");
 
