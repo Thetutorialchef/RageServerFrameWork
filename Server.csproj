@@ -41,10 +41,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
     <PackageReference Include="MySql.Data" Version="8.0.17" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="NLog" Version="4.6.6" />
-    <PackageReference Include="NLog.Config" Version="4.6.6" />
-    <PackageReference Include="NLog.Extensions.Logging" Version="1.5.2" />
-    <PackageReference Include="NLog.Schema" Version="4.6.6" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2" />
   </ItemGroup>
