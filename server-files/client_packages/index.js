@@ -1,3 +1,0 @@
-require('./rsf/index.js');
-
-
