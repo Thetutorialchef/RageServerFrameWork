@@ -27,6 +27,8 @@ namespace rsf.Models
         public uint CharacterModelId { get; set; }
         public CharacterModel CharacterModel { get; set; }
 
+        public ushort Schriftart { get; set; }
+
         public byte Blemish { get; set; }
         public byte BlemishPrimaryColor { get; set; }
         public byte BlemishSecondaryColor { get; set; }

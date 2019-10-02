@@ -1,0 +1,66 @@
+/* satisfy-regular - latin */
+@font-face {
+  font-family: 'Satisfy';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Satisfy Regular'), local('Satisfy-Regular'), url('../webfonts/Satisfy.ttf') format('truetype'); /* Safari, Android, iOS */
+}
+
+/* sacramento-regular - latin */
+@font-face {
+  font-family: 'CollectionFree';
+  font-style: normal;
+  font-weight: 400;
+  src: local('CollectionFree'), url('../webfonts/CollectionFree.otf'); /* Safari, Android, iOS */
+}
+
+/* mansalva-regular - latin */
+@font-face {
+  font-family: 'Mansalva';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Mansalva Regular'), local('Mansalva-Regular'), url('../webfonts/Mansalva.ttf') format('truetype'); /* Safari, Android, iOS */
+}
+
+/* indie-flower-regular - latin */
+@font-face {
+  font-family: 'Indie Flower';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Indie Flower'), local('IndieFlower'), url('../webfonts/IndieFlower.ttf') format('truetype'); /* Safari, Android, iOS */
+}
+
+/* cookie-regular - latin */
+@font-face {
+  font-family: 'Kindergarten';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Kindergarten'), url('../webfonts/Kindergarten.ttf') format('truetype'); /* Safari, Android, iOS */
+}
+
+/* dancing-script-regular - latin */
+@font-face {
+  font-family: 'Dancing Script';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Dancing Script Regular'), local('DancingScript-Regular'), url('../webfonts/DancingScript.ttf') format('truetype'); /* Safari, Android, iOS */
+}
+
+/* great-vibes-regular - latin */
+@font-face {
+  font-family: 'LittleDays';
+  font-style: normal;
+  font-weight: 400;
+  src: local('LittleDays'), url('../webfonts/LittleDays.ttf') format('truetype'); /* Safari, Android, iOS */
+}
+
+.height-80 { height:80px; }
+.Unterschrift { font-size: 50px !important; }
+.schriftart1 { font-family: 'Mansalva'; }
+.schriftart2 { font-family: 'Satisfy'; }
+.schriftart3 { font-family: 'CollectionFree'; }
+.schriftart4 { font-family: 'Indie Flower'; }
+.schriftart5 { font-family: 'Kindergarten'; }
+.schriftart6 { font-family: 'Dancing Script'; }
+.schriftart7 { font-family: 'LittleDays'; }
+

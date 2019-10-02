@@ -6,9 +6,10 @@
 
 
   <!-- Authentication -->
-  <script src="Auth/Login.js" type="client" lang="javascript" />
+  <!--<script src="Auth/Login.js" type="client" lang="javascript" /> -->
 
   <!-- Views -->
+  <!-- <file src="res/views/login.html" />
   <file src="res/views/login.html" />
-  <file src="res/views/register.html" />
+  <file src="res/views/register.html" /> -->
 </meta>

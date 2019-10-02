@@ -1,4 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.CompilerServices;
+using MySql.Data.MySqlClient.X.XDevAPI.Common;
+using MySqlX.XDevAPI.Relational;
 using rsf.Data;
 
 namespace rsf.Models
@@ -8,9 +13,18 @@ namespace rsf.Models
         [Key] public uint Id { get; set; }
         public uint AccountModelId { get; set; }
 
+        [Column(TypeName = "varchar(50)")]
         public string Vorname { get; set; }
-
+        [Column(TypeName = "varchar(50)")]
         public string Nachname { get; set; }
+        public DateTime Geburtsdatum { get; set; }
+        [Column(TypeName = "varchar(50)")]
+        public string Geburtsort { get; set; }
+        [Column(TypeName = "varchar(50)")]
+        public string Staatsangehoerigkeit { get; set; }
+        public bool Geschlecht { get; set; } // false = Männlich, true = Weiblich
+        public byte Familienstand { get; set; } // 0 = ledig, 1 = verheiratet, 2 = getrennt, 3 = geschieden, 4 = verwitwet
+        public byte Schriftart { get; set; }
 
         public int Dead { get; set; }
 

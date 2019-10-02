@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/base.css">
+    <link rel="stylesheet" type="text/css" href="../css/schriftarten.css">
+    <link rel="stylesheet" type="text/css" href="../css/fontawesome.min.css">
+	<title>Einreiseformular</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="logincontainer">
+                    <header><div class="logo"></div></header>
+                    <div class="body">
+                        <div class="alert alert-danger d-none" id="errorMessage"></div>
+						<div class="column">
+							<div class="container">
+								<div class="row">
+									<div class="col-12 mb-4">
+										<p class="text-center h4"><u>Charakterauswahl</u></p>
+									</div>
+									<div class="col-12 mt-4">
+										<div class="alert alert-warning d-none">
+											Du hast noch keinen Charakter.
+										</div>
+										<ul class="list-group">
+										</ul>
+										<a href="createcharacter.html" class="btn btn-success mt-2 float-right">Charakter erstellen</a>
+									</div>
+								</div>
+							</div>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/jquery.min.js"></script>
+	<script src="../js/util.js"></script>
+	<script>
+		function FillCharaktere(json) {
+			if(json.length === 0) {
+				$(".alert.alert-warning").removeClass("d-none");
+				return;
+			}
+			for(let i in json) {
+				if (json.hasOwnProperty(i)) {
+				$("<li>", {
+					class: "list-group-item",
+					id: `character-${json[i].Id}`,
+					text: `${json[i].Vorname} ${json[i].Nachname}`
+				}).appendTo($(".list-group"));
+
+					$("<button>", {
+						class: "btn btn-primary float-right",
+						text: "Einreisen",
+						onclick: `Auswahl(${json[i].Id})`
+					}).appendTo($(`#character-${json[i].Id}`));
+				}
+			}
+		}
+		
+		function Auswahl(id) {
+			$("button").attr("disabled", true);
+			$("a").addClass("disabled");
+			mp.trigger("CallServerEvent", "SelectCharacter", id);
+		}
+	</script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BCrypt;
 using GTANetworkAPI;
@@ -22,7 +23,10 @@ namespace rsf.Auth
             NAPI.Util.ConsoleOutput($"{player.Name} ist gejoint.");
             using (var ctx = new DefaultDbContext())
             {
-                player.TriggerEvent("ShowLoginForm", ctx.Accounts.Count(t => string.Equals(t.SocialClubName, player.SocialClubName, StringComparison.CurrentCultureIgnoreCase)) == 1);
+                player.TriggerEvent("ShowLoginForm", ctx.Accounts.Count(t => string.Equals(t.SocialClubName, player.SocialClubName, StringComparison.CurrentCultureIgnoreCase)) == 1, new Dictionary<string, string>
+                {
+                    {"ReadyEvent", "OnFillName"},
+                });
             }
 
             player.Dimension = DimensionManager.RequestPrivateDimension(player);
@@ -41,10 +45,14 @@ namespace rsf.Auth
                 return;
             }
 
+            NAPI.Util.ConsoleOutput($"{player.Name} ({user.SocialClubName}) hat sich eingeloggt.");
             user.Player = player;
             user.SocialClubName = player.SocialClubName;
             player.SetData("User", user);
-            player.TriggerEvent("ShowCharacterSelection");
+            player.TriggerEvent("ShowCharacterSelection", new Dictionary<string, string>
+            {
+                {"ReadyEvent", "OnFillCharacters"},
+            });
         }
 
         #endregion
@@ -72,10 +80,20 @@ namespace rsf.Auth
             };
             ctx.Accounts.Add(user);
             player.SetData("User", user);
-            player.TriggerEvent("ShowCharacterSelection");
+            player.TriggerEvent("ShowCharacterSelection", new Dictionary<string, string>
+            {
+                {"ReadyEvent", "OnFillCharacters"},
+            });
             ctx.SaveChanges();
         }
 
         #endregion
+
+        [RemoteEvent("OnFillName")]
+        public void OnFillName(Client player)
+        {
+            NAPI.Util.ConsoleOutput("OnFillName");
+            player.TriggerEvent("executeBrowser", $"$('#username').val('{player.SocialClubName}');");
+        }
     }
 }
