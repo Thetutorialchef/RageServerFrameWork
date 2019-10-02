@@ -1,0 +1,139 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9A3B4374-BE44-49B0-8C1D-9BAE71420CE4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>ClassLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>Server</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitignore" />
+    <Content Include=".git\ms-persist.xml" />
+    <Content Include="resources\rsf\meta.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".git\COMMIT_EDITMSG" />
+    <None Include=".git\config" />
+    <None Include=".git\description" />
+    <None Include=".git\HEAD" />
+    <None Include=".git\hooks\applypatch-msg.sample" />
+    <None Include=".git\hooks\commit-msg.sample" />
+    <None Include=".git\hooks\fsmonitor-watchman.sample" />
+    <None Include=".git\hooks\post-update.sample" />
+    <None Include=".git\hooks\pre-applypatch.sample" />
+    <None Include=".git\hooks\pre-commit.sample" />
+    <None Include=".git\hooks\pre-push.sample" />
+    <None Include=".git\hooks\pre-rebase.sample" />
+    <None Include=".git\hooks\pre-receive.sample" />
+    <None Include=".git\hooks\prepare-commit-msg.sample" />
+    <None Include=".git\hooks\update.sample" />
+    <None Include=".git\index" />
+    <None Include=".git\info\exclude" />
+    <None Include=".git\logs\HEAD" />
+    <None Include=".git\logs\refs\heads\master" />
+    <None Include=".git\logs\refs\remotes\origin\HEAD" />
+    <None Include=".git\logs\refs\remotes\origin\master" />
+    <None Include=".git\objects\15\0475a6ffb2b2d74bb32e5da61c5fa58f154818" />
+    <None Include=".git\objects\32\e4a27f6238354d206dea9d110500daf733127e" />
+    <None Include=".git\objects\80\9585467338bdad7692110facc11bebbec89be8" />
+    <None Include=".git\objects\aa\31d5f19abed34cbc63327a97d6ca61e7a4952b" />
+    <None Include=".git\objects\af\1af42c1f1411001dcf678865b4c77cc75894fd" />
+    <None Include=".git\objects\b1\7bec36f1fb9463b6c0b796a3971362f815b1ee" />
+    <None Include=".git\objects\e7\fd11f13e5c729a89463d14f188dea1a1267f92" />
+    <None Include=".git\objects\f9\9ed76fc7c9d9c4e85bb4f9eeb96d2b2454cb10" />
+    <None Include=".git\objects\pack\pack-545f55b2c57f906eae01fe8fe093ebfd7ce4d0a9.idx" />
+    <None Include=".git\objects\pack\pack-545f55b2c57f906eae01fe8fe093ebfd7ce4d0a9.pack" />
+    <None Include=".git\packed-refs" />
+    <None Include=".git\refs\heads\master" />
+    <None Include=".git\refs\remotes\origin\HEAD" />
+    <None Include=".git\refs\remotes\origin\master" />
+    <None Include="README.md" />
+    <None Include="resources\rsf\config.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="resources\rsf\Auth\Creator.cs" />
+    <Compile Include="resources\rsf\Auth\Login.cs" />
+    <Compile Include="resources\rsf\Database\DefaultDbContext.cs" />
+    <Compile Include="resources\rsf\Data\CharacterSex.cs" />
+    <Compile Include="resources\rsf\Data\FractionType.cs" />
+    <Compile Include="resources\rsf\Data\JobType.cs" />
+    <Compile Include="resources\rsf\Data\WhiteListedJobType.cs" />
+    <Compile Include="resources\rsf\Main.cs" />
+    <Compile Include="resources\rsf\Managers\DimensionManager.cs" />
+    <Compile Include="resources\rsf\Migrations\20190930005535_Initial.cs" />
+    <Compile Include="resources\rsf\Migrations\20190930005535_Initial.Designer.cs">
+      <DependentUpon>20190930005535_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="resources\rsf\Migrations\20190930151452_SocialClubName.cs" />
+    <Compile Include="resources\rsf\Migrations\20190930151452_SocialClubName.Designer.cs">
+      <DependentUpon>20190930151452_SocialClubName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="resources\rsf\Migrations\20190930151529_ForumNameEntfernt.cs" />
+    <Compile Include="resources\rsf\Migrations\20190930151529_ForumNameEntfernt.Designer.cs">
+      <DependentUpon>20190930151529_ForumNameEntfernt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="resources\rsf\Migrations\20190930185807_CharacterDaten-Schriftarten.cs" />
+    <Compile Include="resources\rsf\Migrations\20190930185807_CharacterDaten-Schriftarten.Designer.cs">
+      <DependentUpon>20190930185807_CharacterDaten-Schriftarten.cs</DependentUpon>
+    </Compile>
+    <Compile Include="resources\rsf\Migrations\20191001190930_CharacterModelRegistration.cs" />
+    <Compile Include="resources\rsf\Migrations\20191001190930_CharacterModelRegistration.Designer.cs">
+      <DependentUpon>20191001190930_CharacterModelRegistration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="resources\rsf\Migrations\20191001191116_CharacterModelRegistrationFix.cs" />
+    <Compile Include="resources\rsf\Migrations\20191001191116_CharacterModelRegistrationFix.Designer.cs">
+      <DependentUpon>20191001191116_CharacterModelRegistrationFix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="resources\rsf\Migrations\20191001213107_CharacterModelSchriftart.cs" />
+    <Compile Include="resources\rsf\Migrations\20191001213107_CharacterModelSchriftart.Designer.cs">
+      <DependentUpon>20191001213107_CharacterModelSchriftart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="resources\rsf\Migrations\DefaultDbContextModelSnapshot.cs" />
+    <Compile Include="resources\rsf\Models\AccountModel.cs" />
+    <Compile Include="resources\rsf\Models\CharacterDatenModel.cs" />
+    <Compile Include="resources\rsf\Models\CharacterModel.cs" />
+    <Compile Include="resources\rsf\Models\FractionModel.cs" />
+    <Compile Include="resources\rsf\Models\RoleModel.cs" />
+    <Compile Include="resources\rsf\Services\ConfigurationService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".git\objects\info\" />
+    <Folder Include=".git\refs\tags\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>
