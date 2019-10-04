@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using rsf.Data;
+using Server.resources.rsf.Models;
 
 namespace rsf.Models
 {
@@ -60,7 +61,11 @@ namespace rsf.Models
 
         public AccountModel AccountModel { get; set; }
         [NotMapped]
-        public CharacterDatenModel Daten { get; set; }
+        public CharacterOverlayModel Daten { get; set; }
+        [NotMapped]
+        public CharacterBlendModel Blend { get; set; }
+        [NotMapped]
+        public CharacterFeaturesModel FaceFeatures { get; set; }
 
         // public double[] LastLocation { get; set; } = new double[] { -1167.994, -700.4285, 21.89281 }; // Letzte Position
     }

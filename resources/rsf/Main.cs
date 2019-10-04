@@ -9,7 +9,7 @@ namespace rsf
     {
         public static JObject Config = JObject.Parse(File.ReadAllText($"{Directory.GetCurrentDirectory()}/conf.json"));
         public static readonly Random Zufall = new Random();
-        public static readonly string currDirectory = $"{Environment.CurrentDirectory}{Path.DirectorySeparatorChar}bridge{Path.DirectorySeparatorChar}resources{Path.DirectorySeparatorChar}rsf{Path.DirectorySeparatorChar}";
+        public static readonly string CurrDirectory = $"{Environment.CurrentDirectory}{Path.DirectorySeparatorChar}bridge{Path.DirectorySeparatorChar}resources{Path.DirectorySeparatorChar}rsf{Path.DirectorySeparatorChar}";
 
         [ServerEvent(Event.ResourceStart)]
         public void ResourceStart()
@@ -24,6 +24,7 @@ namespace rsf
             NAPI.Server.SetGlobalServerChat(false);
             NAPI.Server.SetAutoSpawnOnConnect(false);
             NAPI.Server.SetAutoRespawnAfterDeath(false);
+
             // NAPI.Server.SetCommandErrorMessage("[~r~SERVER:~w~] Dieser Command Existiert nicht!");
         }
     }

@@ -42,7 +42,7 @@ namespace Server.resources.rsf.Commands
             if (player.IsInVehicle)
                 text =
                     $"NAPI.Vehicle.CreateVehicle({player.Vehicle.Model}, new Vector3({player.Vehicle.Position.X.Cc()}, {player.Vehicle.Position.Y.Cc()}, {player.Vehicle.Position.Z.Cc()}), new Vector3({player.Vehicle.Rotation.X.Cc()}, {player.Vehicle.Rotation.Y.Cc()}, {player.Vehicle.Rotation.Z.Cc()}), {player.Vehicle.PrimaryColor}, {player.Vehicle.SecondaryColor}, \"{player.Vehicle.NumberPlate}\", 255, false, false, {player.Vehicle.Dimension}) // {kommentar}";
-            File.AppendAllText($"{Main.currDirectory}savedpositions.txt", $"{text}{Environment.NewLine}");
+            File.AppendAllText($"{Main.CurrDirectory}savedpositions.txt", $"{text}{Environment.NewLine}");
             player.SendNotification("Position gespeichert.");
         }
     }

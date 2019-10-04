@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using rsf.Database;
 
-namespace rsf.Migrations
+namespace Server.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    [Migration("20191003220850_CharakterPosition")]
-    partial class CharakterPosition
+    [Migration("20191004103647_BlendOverlayAusgelagert")]
+    partial class BlendOverlayAusgelagert
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,6 +18,38 @@ namespace rsf.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("Server.resources.rsf.Models.CharacterBlendModel", b =>
+                {
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<uint>("CharacterModelId");
+
+                    b.Property<byte>("ShapeFirst");
+
+                    b.Property<float>("ShapeMix");
+
+                    b.Property<byte>("ShapeSecond");
+
+                    b.Property<byte>("ShapeThird");
+
+                    b.Property<byte>("SkinFirst");
+
+                    b.Property<float>("SkinMix");
+
+                    b.Property<byte>("SkinSecond");
+
+                    b.Property<byte>("SkinThird");
+
+                    b.Property<float>("ThirdMix");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CharacterModelId");
+
+                    b.ToTable("CharacterBlend");
+                });
 
             modelBuilder.Entity("rsf.Models.AccountModel", b =>
                 {
@@ -47,7 +79,79 @@ namespace rsf.Migrations
                     b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("rsf.Models.CharacterDatenModel", b =>
+            modelBuilder.Entity("rsf.Models.CharacterModel", b =>
+                {
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccountBalance");
+
+                    b.Property<uint>("AccountModelId");
+
+                    b.Property<double>("Bank");
+
+                    b.Property<int>("Dead");
+
+                    b.Property<byte>("Familienstand");
+
+                    b.Property<DateTime>("Geburtsdatum");
+
+                    b.Property<string>("Geburtsort")
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<bool>("Geschlecht");
+
+                    b.Property<int>("Jail");
+
+                    b.Property<int>("Jailtime");
+
+                    b.Property<int>("JobId");
+
+                    b.Property<int>("JobRank");
+
+                    b.Property<double>("Money");
+
+                    b.Property<string>("Nachname")
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("OnDuty");
+
+                    b.Property<float>("PosX");
+
+                    b.Property<float>("PosY");
+
+                    b.Property<float>("PosZ");
+
+                    b.Property<int>("RoleId");
+
+                    b.Property<float>("RotX");
+
+                    b.Property<float>("RotY");
+
+                    b.Property<float>("RotZ");
+
+                    b.Property<byte>("Schriftart");
+
+                    b.Property<int>("Sex");
+
+                    b.Property<string>("Staatsangehoerigkeit")
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Vorname")
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("WJobId");
+
+                    b.Property<int>("Wantedlevel");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountModelId");
+
+                    b.ToTable("Characters");
+                });
+
+            modelBuilder.Entity("rsf.Models.CharacterOverlayModel", b =>
                 {
                     b.Property<uint>("Id")
                         .ValueGeneratedOnAdd();
@@ -158,82 +262,10 @@ namespace rsf.Migrations
 
                     b.HasIndex("CharacterModelId");
 
-                    b.ToTable("CharacterDaten");
+                    b.ToTable("CharacterOverlay");
                 });
 
-            modelBuilder.Entity("rsf.Models.CharacterModel", b =>
-                {
-                    b.Property<uint>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccountBalance");
-
-                    b.Property<uint>("AccountModelId");
-
-                    b.Property<double>("Bank");
-
-                    b.Property<int>("Dead");
-
-                    b.Property<byte>("Familienstand");
-
-                    b.Property<DateTime>("Geburtsdatum");
-
-                    b.Property<string>("Geburtsort")
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<bool>("Geschlecht");
-
-                    b.Property<int>("Jail");
-
-                    b.Property<int>("Jailtime");
-
-                    b.Property<int>("JobId");
-
-                    b.Property<int>("JobRank");
-
-                    b.Property<double>("Money");
-
-                    b.Property<string>("Nachname")
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<int>("OnDuty");
-
-                    b.Property<float>("PosX");
-
-                    b.Property<float>("PosY");
-
-                    b.Property<float>("PosZ");
-
-                    b.Property<int>("RoleId");
-
-                    b.Property<float>("RotX");
-
-                    b.Property<float>("RotY");
-
-                    b.Property<float>("RotZ");
-
-                    b.Property<byte>("Schriftart");
-
-                    b.Property<int>("Sex");
-
-                    b.Property<string>("Staatsangehoerigkeit")
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("Vorname")
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<int>("WJobId");
-
-                    b.Property<int>("Wantedlevel");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountModelId");
-
-                    b.ToTable("Characters");
-                });
-
-            modelBuilder.Entity("rsf.Models.CharacterDatenModel", b =>
+            modelBuilder.Entity("Server.resources.rsf.Models.CharacterBlendModel", b =>
                 {
                     b.HasOne("rsf.Models.CharacterModel", "CharacterModel")
                         .WithMany()
@@ -244,8 +276,16 @@ namespace rsf.Migrations
             modelBuilder.Entity("rsf.Models.CharacterModel", b =>
                 {
                     b.HasOne("rsf.Models.AccountModel", "AccountModel")
-                        .WithMany("Characters")
+                        .WithMany()
                         .HasForeignKey("AccountModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("rsf.Models.CharacterOverlayModel", b =>
+                {
+                    b.HasOne("rsf.Models.CharacterModel", "CharacterModel")
+                        .WithMany()
+                        .HasForeignKey("CharacterModelId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

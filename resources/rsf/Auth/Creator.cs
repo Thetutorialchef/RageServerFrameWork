@@ -5,6 +5,7 @@ using GTANetworkAPI;
 using Newtonsoft.Json;
 using rsf.Database;
 using rsf.Models;
+using Server.resources.rsf.Models;
 
 namespace rsf.Auth
 {
@@ -68,17 +69,19 @@ namespace rsf.Auth
             AccountModel acc = player.GetData("User");
 
             acc.Character = character;
-            if (ctx.CharacterDaten.Count(t => t.CharacterModelId == id) == 0)
+            if (ctx.CharacterOverlay.Count(t => t.CharacterModelId == id) == 0)
             {
-                player.TriggerEvent("Freeze", true);
-                player.TriggerEvent("OnCreatorStart", CharacterDatenModel.MaxAvailable, CharacterDatenModel.Names);
+                player.TriggerEvent("OnCreatorStart", CharacterOverlayModel.MaxAvailable, CharacterOverlayModel.Names);
                 player.Position = new Vector3(402.8664, -996.4108, -99.00027);
                 player.Rotation = new Vector3(0.0, 0.0, 167);
                 player.SetSkin(acc.Character.Geschlecht ? PedHash.FreemodeFemale01 : PedHash.FreemodeMale01);
+                player.TriggerEvent("Freeze", true);
             }
             else
             {
-                acc.Character.Daten = ctx.CharacterDaten.FirstOrDefault(t => t.CharacterModelId == id);
+                acc.Character.Daten = ctx.CharacterOverlay.FirstOrDefault(t => t.CharacterModelId == id);
+                acc.Character.FaceFeatures = ctx.CharacterFeatures.FirstOrDefault(t => t.CharacterModelId == id);
+                acc.Character.Blend = ctx.CharacterBlend.FirstOrDefault(t => t.CharacterModelId == id);
                 acc.Spawn();
             }
 
@@ -87,18 +90,32 @@ namespace rsf.Auth
         }
 
         [RemoteEvent("OnCreatorSave")]
-        public void OnCreatorSave(Client player, string json)
+        public void OnCreatorSave(Client player, string overlay, string blend, string faceFeatures)
         {
+            NAPI.Util.ConsoleOutput($"faceFeatures: {faceFeatures}");
             using var ctx = new DefaultDbContext();
-
             player.TriggerEvent("OnCreatorStop");
             player.TriggerEvent("Freeze", false);
             AccountModel acc = player.GetData("User");
-            var characterDaten = JsonConvert.DeserializeObject<CharacterDatenModel>(json);
-            characterDaten.CharacterModelId = acc.Character.Id;
-            ctx.CharacterDaten.Add(characterDaten);
+            var characterOverlay = JsonConvert.DeserializeObject<CharacterOverlayModel>(overlay);
+            characterOverlay.CharacterModelId = acc.Character.Id;
+            ctx.CharacterOverlay.Add(characterOverlay);
             ctx.SaveChanges();
-            acc.Character.Daten = ctx.CharacterDaten.FirstOrDefault(t => t.CharacterModelId == acc.Character.Id);
+
+            var characterBlend = JsonConvert.DeserializeObject<CharacterBlendModel>(blend);
+            characterBlend.CharacterModelId = acc.Character.Id;
+            ctx.CharacterBlend.Add(characterBlend);
+            ctx.SaveChanges();
+
+            var characterFaceFeatures = JsonConvert.DeserializeObject<CharacterFeaturesModel>(faceFeatures);
+            characterFaceFeatures.CharacterModelId = acc.Character.Id;
+            ctx.CharacterFeatures.Add(characterFaceFeatures);
+            ctx.SaveChanges();
+
+
+            acc.Character.Daten = ctx.CharacterOverlay.FirstOrDefault(t => t.CharacterModelId == acc.Character.Id);
+            acc.Character.FaceFeatures = ctx.CharacterFeatures.FirstOrDefault(t => t.CharacterModelId == acc.Character.Id);
+            acc.Character.Blend = ctx.CharacterBlend.FirstOrDefault(t => t.CharacterModelId == acc.Character.Id);
             acc.Spawn();
         }
     }

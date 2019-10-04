@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace rsf.Migrations
+namespace Server.Migrations
 {
-    public partial class Initial : Migration
+    public partial class BlendOverlayAusgelagert : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,8 +15,6 @@ namespace rsf.Migrations
                     Id = table.Column<uint>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     SocialClubName = table.Column<string>(nullable: true),
-                    ForumName = table.Column<string>(nullable: true),
-                    Username = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     TeamSpeakUniqueId = table.Column<string>(nullable: true),
@@ -37,9 +35,21 @@ namespace rsf.Migrations
                 {
                     Id = table.Column<uint>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Vorname = table.Column<string>(nullable: true),
-                    Nachname = table.Column<string>(nullable: true),
                     AccountModelId = table.Column<uint>(nullable: false),
+                    Vorname = table.Column<string>(type: "varchar(50)", nullable: true),
+                    Nachname = table.Column<string>(type: "varchar(50)", nullable: true),
+                    Geburtsdatum = table.Column<DateTime>(nullable: false),
+                    Geburtsort = table.Column<string>(type: "varchar(50)", nullable: true),
+                    Staatsangehoerigkeit = table.Column<string>(type: "varchar(50)", nullable: true),
+                    Geschlecht = table.Column<bool>(nullable: false),
+                    Familienstand = table.Column<byte>(nullable: false),
+                    Schriftart = table.Column<byte>(nullable: false),
+                    PosX = table.Column<float>(nullable: false),
+                    PosY = table.Column<float>(nullable: false),
+                    PosZ = table.Column<float>(nullable: false),
+                    RotX = table.Column<float>(nullable: false),
+                    RotY = table.Column<float>(nullable: false),
+                    RotZ = table.Column<float>(nullable: false),
                     Dead = table.Column<int>(nullable: false),
                     RoleId = table.Column<int>(nullable: false),
                     AccountBalance = table.Column<int>(nullable: false),
@@ -66,12 +76,41 @@ namespace rsf.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CharacterDaten",
+                name: "CharacterBlend",
                 columns: table => new
                 {
                     Id = table.Column<uint>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CharacterModelId = table.Column<uint>(nullable: false),
+                    ShapeFirst = table.Column<byte>(nullable: false),
+                    ShapeMix = table.Column<float>(nullable: false),
+                    ShapeSecond = table.Column<byte>(nullable: false),
+                    ShapeThird = table.Column<byte>(nullable: false),
+                    SkinFirst = table.Column<byte>(nullable: false),
+                    SkinMix = table.Column<float>(nullable: false),
+                    SkinSecond = table.Column<byte>(nullable: false),
+                    SkinThird = table.Column<byte>(nullable: false),
+                    ThirdMix = table.Column<float>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CharacterBlend", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CharacterBlend_Characters_CharacterModelId",
+                        column: x => x.CharacterModelId,
+                        principalTable: "Characters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CharacterOverlay",
+                columns: table => new
+                {
+                    Id = table.Column<uint>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CharacterModelId = table.Column<uint>(nullable: false),
+                    Schriftart = table.Column<ushort>(nullable: false),
                     Blemish = table.Column<byte>(nullable: false),
                     BlemishPrimaryColor = table.Column<byte>(nullable: false),
                     BlemishSecondaryColor = table.Column<byte>(nullable: false),
@@ -124,9 +163,9 @@ namespace rsf.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CharacterDaten", x => x.Id);
+                    table.PrimaryKey("PK_CharacterOverlay", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CharacterDaten_Characters_CharacterModelId",
+                        name: "FK_CharacterOverlay_Characters_CharacterModelId",
                         column: x => x.CharacterModelId,
                         principalTable: "Characters",
                         principalColumn: "Id",
@@ -134,8 +173,13 @@ namespace rsf.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CharacterDaten_CharacterModelId",
-                table: "CharacterDaten",
+                name: "IX_CharacterBlend_CharacterModelId",
+                table: "CharacterBlend",
+                column: "CharacterModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CharacterOverlay_CharacterModelId",
+                table: "CharacterOverlay",
                 column: "CharacterModelId");
 
             migrationBuilder.CreateIndex(
@@ -147,7 +191,10 @@ namespace rsf.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CharacterDaten");
+                name: "CharacterBlend");
+
+            migrationBuilder.DropTable(
+                name: "CharacterOverlay");
 
             migrationBuilder.DropTable(
                 name: "Characters");

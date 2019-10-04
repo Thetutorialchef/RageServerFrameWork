@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using rsf.Models;
+using Server.resources.rsf.Models;
 
 namespace rsf.Database
 {
@@ -27,7 +28,9 @@ namespace rsf.Database
         // Account model class created somewhere else
         public DbSet<AccountModel> Accounts { get; set; }
         public DbSet<CharacterModel> Characters { get; set; }
-        public DbSet<CharacterDatenModel> CharacterDaten { get; set; }
+        public DbSet<CharacterOverlayModel> CharacterOverlay { get; set; }
+        public DbSet<CharacterBlendModel> CharacterBlend { get; set; }
+        public DbSet<CharacterFeaturesModel> CharacterFeatures { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using GTANetworkAPI;
 
 namespace rsf.Models
 {
-    public class CharacterDatenModel
+    public class CharacterOverlayModel
     {
         public static Dictionary<byte, string> Names = new Dictionary<byte, string>
         {
@@ -16,7 +17,7 @@ namespace rsf.Models
             {6, "Teint"},
             {7, "Sonnenschäden"},
             {8, "Lippenstift"},
-            {9, "Muttermale Sommersprossen"},
+            {9, "Schönheitsfleck"},
             {10, "Brusthaar"},
             {11, "Körperunreinheiten"}
         };
