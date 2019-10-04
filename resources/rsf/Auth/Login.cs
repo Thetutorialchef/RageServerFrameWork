@@ -15,6 +15,9 @@ namespace rsf.Auth
         public void Disconnect(Client player, DisconnectionType type, string reason)
         {
             NAPI.Util.ConsoleOutput($"{player.Name} hat den Server verlassen.");
+            if (!player.HasData("User")) return;
+            AccountModel acc = player.GetData("User");
+            acc.Save();
         }
 
         [ServerEvent(Event.PlayerConnected)]
@@ -92,7 +95,6 @@ namespace rsf.Auth
         [RemoteEvent("OnFillName")]
         public void OnFillName(Client player)
         {
-            NAPI.Util.ConsoleOutput("OnFillName");
             player.TriggerEvent("executeBrowser", $"$('#username').val('{player.SocialClubName}');");
         }
     }

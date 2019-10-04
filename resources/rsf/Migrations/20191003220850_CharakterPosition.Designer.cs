@@ -2,14 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using rsf.Database;
 
 namespace rsf.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    partial class DefaultDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191003220850_CharakterPosition")]
+    partial class CharakterPosition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,7 +244,7 @@ namespace rsf.Migrations
             modelBuilder.Entity("rsf.Models.CharacterModel", b =>
                 {
                     b.HasOne("rsf.Models.AccountModel", "AccountModel")
-                        .WithMany()
+                        .WithMany("Characters")
                         .HasForeignKey("AccountModelId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

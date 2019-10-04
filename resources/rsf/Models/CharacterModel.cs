@@ -1,9 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.CompilerServices;
-using MySql.Data.MySqlClient.X.XDevAPI.Common;
-using MySqlX.XDevAPI.Relational;
 using rsf.Data;
 
 namespace rsf.Models
@@ -25,6 +22,13 @@ namespace rsf.Models
         public bool Geschlecht { get; set; } // false = Männlich, true = Weiblich
         public byte Familienstand { get; set; } // 0 = ledig, 1 = verheiratet, 2 = getrennt, 3 = geschieden, 4 = verwitwet
         public byte Schriftart { get; set; }
+
+        public float PosX { get; set; } = -1099.6931f;
+        public float PosY { get; set; } = -2738.4429f;
+        public float PosZ { get; set; } = -7.4101357f;
+        public float RotX { get; set; } = 0.0f;
+        public float RotY { get; set; } = 0.0f;
+        public float RotZ { get; set; } = 313.66293f;
 
         public int Dead { get; set; }
 
@@ -55,6 +59,8 @@ namespace rsf.Models
         public int Wantedlevel { get; set; }
 
         public AccountModel AccountModel { get; set; }
+        [NotMapped]
+        public CharacterDatenModel Daten { get; set; }
 
         // public double[] LastLocation { get; set; } = new double[] { -1167.994, -700.4285, 21.89281 }; // Letzte Position
     }

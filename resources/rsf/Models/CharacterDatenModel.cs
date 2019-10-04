@@ -5,6 +5,22 @@ namespace rsf.Models
 {
     public class CharacterDatenModel
     {
+        public static Dictionary<byte, string> Names = new Dictionary<byte, string>
+        {
+            {0, "Schönheitsfehler"},
+            {1, "Gesichtsbehaarung"},
+            {2, "Augenbrauen"},
+            {3, "Alterung"},
+            {4, "Make-up"},
+            {5, "Erröten"},
+            {6, "Teint"},
+            {7, "Sonnenschäden"},
+            {8, "Lippenstift"},
+            {9, "Muttermale Sommersprossen"},
+            {10, "Brusthaar"},
+            {11, "Körperunreinheiten"}
+        };
+
         public static Dictionary<byte, uint> MaxAvailable = new Dictionary<byte, uint> // ex. MaxAvailable[ChestHair]
         {
             {0, 23},
@@ -18,8 +34,7 @@ namespace rsf.Models
             {8, 9},
             {9, 17},
             {10, 16},
-            {11, 11},
-            {12, 1}
+            {11, 11}
         };
 
         [Key] public uint Id { get; set; }

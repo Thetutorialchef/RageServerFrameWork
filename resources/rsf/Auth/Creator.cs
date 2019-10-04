@@ -58,20 +58,48 @@ namespace rsf.Auth
         [RemoteEvent("SelectCharacter")]
         public void SelectCharacter(Client player, uint id)
         {
-            // TODO Creator-Fertigstellen
+            using var ctx = new DefaultDbContext();
+            var character = ctx.Characters.FirstOrDefault(t => t.Id == id);
+            if (character == null) return;
+
             player.TriggerEvent("hideBrowser");
             player.TriggerEvent("ResetCamera");
-            player.Position = new Vector3(0, 0, 0);
+
+            AccountModel acc = player.GetData("User");
+
+            acc.Character = character;
+            if (ctx.CharacterDaten.Count(t => t.CharacterModelId == id) == 0)
+            {
+                player.TriggerEvent("Freeze", true);
+                player.TriggerEvent("OnCreatorStart", CharacterDatenModel.MaxAvailable, CharacterDatenModel.Names);
+                player.Position = new Vector3(402.8664, -996.4108, -99.00027);
+                player.Rotation = new Vector3(0.0, 0.0, 167);
+                player.SetSkin(acc.Character.Geschlecht ? PedHash.FreemodeFemale01 : PedHash.FreemodeMale01);
+            }
+            else
+            {
+                acc.Character.Daten = ctx.CharacterDaten.FirstOrDefault(t => t.CharacterModelId == id);
+                acc.Spawn();
+            }
+
+
             //Char Creator Start
         }
 
-        [Command("veh")]
-        public void VehCommand(Client player, VehicleHash name)
+        [RemoteEvent("OnCreatorSave")]
+        public void OnCreatorSave(Client player, string json)
         {
-            var veh = NAPI.Vehicle.CreateVehicle(name, new Vector3(0, 0, 0), new Vector3(0, 0, 0), 0, 0);
-            veh.Dimension = player.Dimension;
-            player.SetIntoVehicle(veh, -1);
+            using var ctx = new DefaultDbContext();
 
+            player.TriggerEvent("OnCreatorStop");
+            player.TriggerEvent("Freeze", false);
+            AccountModel acc = player.GetData("User");
+            var characterDaten = JsonConvert.DeserializeObject<CharacterDatenModel>(json);
+            characterDaten.CharacterModelId = acc.Character.Id;
+            ctx.CharacterDaten.Add(characterDaten);
+            ctx.SaveChanges();
+            acc.Character.Daten = ctx.CharacterDaten.FirstOrDefault(t => t.CharacterModelId == acc.Character.Id);
+            acc.Spawn();
         }
     }
 }
