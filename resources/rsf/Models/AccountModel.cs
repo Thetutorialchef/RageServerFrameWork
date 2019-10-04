@@ -57,7 +57,6 @@ namespace rsf.Models
                 SkinThird = 0,
                 ThirdMix = 0
             });
-
             Player.SetFaceFeature(0, Character.FaceFeatures.Nasenbreite);
             Player.SetFaceFeature(1, Character.FaceFeatures.Nasenhoehe);
             Player.SetFaceFeature(2, Character.FaceFeatures.Nasenlaenge);
@@ -78,6 +77,9 @@ namespace rsf.Models
             Player.SetFaceFeature(17, Character.FaceFeatures.Kinnbreite);
             Player.SetFaceFeature(18, Character.FaceFeatures.Kinnform);
             Player.SetFaceFeature(19, Character.FaceFeatures.Halsbreite);
+
+            Player.SetClothes(2, Character.Daten.Frisur, 0);
+            NAPI.Player.SetPlayerHairColor(Player, Character.Daten.FrisurFarbe, Character.Daten.FrisurHighlights);
         }
 
         public void Save()

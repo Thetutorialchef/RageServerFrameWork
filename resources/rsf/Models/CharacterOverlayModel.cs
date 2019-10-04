@@ -20,6 +20,9 @@ namespace rsf.Models
             {9, "Schönheitsfleck"},
             {10, "Brusthaar"},
             {11, "Körperunreinheiten"}
+            // Frisur
+            // Haarfarbe
+            // Haarhighlights
         };
 
         public static Dictionary<byte, uint> MaxAvailable = new Dictionary<byte, uint> // ex. MaxAvailable[ChestHair]
@@ -106,6 +109,9 @@ namespace rsf.Models
         public byte BodyBlemishSecondaryColor { get; set; }
         public float BodyBlemishOpacity { get; set; } = 1;
 
-        public byte AddBodyBlemish { get; set; }
+        public int Frisur { get; set; }
+        public byte FrisurFarbe { get; set; }
+        public byte FrisurHighlights { get; set; }
+
     }
 }

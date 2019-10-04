@@ -71,7 +71,7 @@ namespace rsf.Auth
             acc.Character = character;
             if (ctx.CharacterOverlay.Count(t => t.CharacterModelId == id) == 0)
             {
-                player.TriggerEvent("OnCreatorStart", CharacterOverlayModel.MaxAvailable, CharacterOverlayModel.Names);
+                player.TriggerEvent("OnCreatorStart", CharacterOverlayModel.MaxAvailable, CharacterOverlayModel.Names, acc.Character.Geschlecht);
                 player.Position = new Vector3(402.8664, -996.4108, -99.00027);
                 player.Rotation = new Vector3(0.0, 0.0, 167);
                 player.SetSkin(acc.Character.Geschlecht ? PedHash.FreemodeFemale01 : PedHash.FreemodeMale01);
@@ -92,7 +92,6 @@ namespace rsf.Auth
         [RemoteEvent("OnCreatorSave")]
         public void OnCreatorSave(Client player, string overlay, string blend, string faceFeatures)
         {
-            NAPI.Util.ConsoleOutput($"faceFeatures: {faceFeatures}");
             using var ctx = new DefaultDbContext();
             player.TriggerEvent("OnCreatorStop");
             player.TriggerEvent("Freeze", false);

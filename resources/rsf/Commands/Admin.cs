@@ -11,6 +11,21 @@ namespace Server.resources.rsf.Commands
     public class Admin:Script
     {
         public static List<Vehicle> AdminVehicle = new List<Vehicle>();
+
+        [Command("c")]
+        public void Setclothes(Client client, int slot, int drawable, byte color = 1, byte highlight = 0)
+        {
+            client.SetClothes(slot, drawable, 0);
+            //NAPI.Player.SetPlayerClothes(client, 2, drawable, 0);
+            NAPI.Player.SetPlayerHairColor(client, color, highlight);
+        }
+
+        [Command("haar")]
+        public void Haar(Client player, int style)
+        {
+            player.SetClothes(2, style, style);
+        }
+
         [Command("veh", Alias = "v")]
         public void VehCommand(Client player, VehicleHash name, int farbe1 = -1, int farbe2 = -1)
         {
