@@ -1,5 +1,4 @@
 ﻿#define Docker
-#define MertLocal
 
 using System;
 using System.IO;
@@ -31,6 +30,7 @@ namespace rsf.Database
         public DbSet<CharacterOverlayModel> CharacterOverlay { get; set; }
         public DbSet<CharacterBlendModel> CharacterBlend { get; set; }
         public DbSet<CharacterFeaturesModel> CharacterFeatures { get; set; }
+        public DbSet<Clothes> Clothes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -54,10 +54,8 @@ namespace rsf.Database
             var configuration = builder.Build();
 #if Docker
             _connectionString = configuration.GetConnectionString("DockerConnection");
-#elif MertLocal
-            _connectionString = configuration.GetConnectionString("MertLocalConnection");
 #else
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("MertLocalConnection");
 #endif
             optionsBuilder.UseMySql(_connectionString);
         }
@@ -104,10 +102,8 @@ namespace rsf.Database
             // Get the connection string located inside the appsettings.json file under the name "DefaultConnection"
 #if Docker
             _connectionString = configuration.GetConnectionString("DockerConnection");
-#elif MertLocal
-            _connectionString = configuration.GetConnectionString("MertLocalConnection");
 #else
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("MertLocalConnection");
 #endif
         }
     }

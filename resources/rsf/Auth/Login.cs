@@ -24,12 +24,10 @@ namespace rsf.Auth
         public void OnPlayerConnected(Client player)
         {
             NAPI.Util.ConsoleOutput($"{player.Name} ist gejoint.");
+            player.SetSharedData("SocialClub", player.SocialClubName);
             using (var ctx = new DefaultDbContext())
             {
-                player.TriggerEvent("ShowLoginForm", ctx.Accounts.Count(t => string.Equals(t.SocialClubName, player.SocialClubName, StringComparison.CurrentCultureIgnoreCase)) == 1, new Dictionary<string, string>
-                {
-                    {"ReadyEvent", "OnFillName"},
-                });
+                player.TriggerEvent("ShowLoginForm", ctx.Accounts.Count(t => string.Equals(t.SocialClubName, player.SocialClubName, StringComparison.CurrentCultureIgnoreCase)) == 1, new Dictionary<string, string> { { "SocialClub", "true" } });
             }
 
             player.Dimension = DimensionManager.RequestPrivateDimension(player);

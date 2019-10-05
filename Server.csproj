@@ -23,6 +23,8 @@
     <Compile Remove="Migrations\20190930151429_SocialClubName.Designer.cs" />
     <Compile Remove="Migrations\20190930153509_MaxCharaktere.cs" />
     <Compile Remove="Migrations\20190930153509_MaxCharaktere.Designer.cs" />
+    <Compile Remove="Migrations\20191005105108_Test.cs" />
+    <Compile Remove="Migrations\20191005105108_Test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,6 +61,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="resources\rsf\config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="resources\rsf\json\besttorso_female.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="resources\rsf\json\besttorso_male.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="resources\rsf\meta.xml">
