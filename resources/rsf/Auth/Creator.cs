@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using GTANetworkAPI;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using rsf.Database;
 using rsf.Models;
 using Server.resources.rsf.Models;
@@ -30,13 +32,20 @@ namespace rsf.Auth
                 player.TriggerEvent("executeBrowser", "HandleError(3)");
                 return;
             }
-            var serializer = new JsonSerializerSettings {DateFormatString = "yyyy-MM-dd"};
-            serializer.Error += (sender, args) =>
+
+            var a = JsonConvert.DeserializeObject<CharacterModel>(parameter, new JsonSerializerSettings
             {
-                errors.Add(args.ErrorContext.Error.Message);
-                args.ErrorContext.Handled = true;
-            };
-            var a = JsonConvert.DeserializeObject<CharacterModel>(parameter, serializer);
+                Converters = new List<JsonConverter> { new IsoDateTimeConverter { DateTimeFormat = "dd.MM.yyyy" } },
+                Error = delegate (object sender, ErrorEventArgs args)
+                {
+                    args.ErrorContext.Handled = true;
+                    errors.Add(args.ErrorContext.Error.Message);
+                }
+            });
+            foreach (var error in errors)
+            {
+                NAPI.Util.ConsoleOutput($"Errors: {error}");
+            }
             if (errors.Count() != 0)
             {
                 player.TriggerEvent("executeBrowser", "HandleError(1)");

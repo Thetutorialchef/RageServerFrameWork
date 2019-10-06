@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using GTANetworkAPI;
-using Server.resources.rsf.Models;
 
 namespace rsf.Models
 {

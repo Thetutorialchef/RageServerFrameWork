@@ -7,13 +7,44 @@ using rsf;
 using rsf.Database;
 using rsf.Models;
 using Server.resources.rsf.Models;
-using Vehicle = GTANetworkAPI.Vehicle;
 
 namespace Server.resources.rsf.Commands
 {
     public class Admin:Script
     {
         public static List<Fahrzeug> AdminVehicle = new List<Fahrzeug>();
+        public static int Count = 0;
+
+        [Command("unterhemdcheck")]
+        public void UnterhemdCheckCmd(Client player)
+        {
+            NAPI.Task.Run(() =>
+                {
+                    if (Count == 187)
+                    {
+                        Count = 0;
+                        return;
+                    }
+                    player.SetClothes(8, Count, 0);
+                    NAPI.Util.ConsoleOutput($"I: {Count}");
+                    Count++;
+                    UnterhemdCheckCmd(player);
+                }, 1000);
+        }
+
+        [Command("goto")]
+        public void GotoCmd(Client player, Client player2)
+        {
+            player.Position = player2.Position;
+            player.Dimension = player2.Dimension;
+        }
+
+        [Command("gethere")]
+        public void GethereCmd(Client player, Client player2)
+        {
+            player2.Position = player.Position;
+            player2.Dimension = player.Dimension;
+        }
 
         [Command]
         public void speichern(Client player)
@@ -23,11 +54,11 @@ namespace Server.resources.rsf.Commands
                 player.SendChatMessage("Bitte zuerst /setclothes [Texture]");
                 return;
             }
-            if (!player.HasData("SetClothes-UnterhemdDrawable"))
+/*            if (!player.HasData("SetClothes-UnterhemdDrawable"))
             {
                 player.SendChatMessage("Bitte zuerst /unterhemd [ID]");
                 return;
-            }
+            }*/
             if(!player.HasData("SetClothes-TorsoDrawable"))
             {
                 player.SendChatMessage("Bitte zuerst /torso [ID]");
@@ -41,8 +72,8 @@ namespace Server.resources.rsf.Commands
                 Texture = player.GetData("SetClothes-Texture"),
                 TorsoDrawable = player.GetData("SetClothes-TorsoDrawable"),
                 TorsoTexture = player.GetData("SetClothes-TorsoTexture"),
-                UnterhemdDrawable = player.GetData("SetClothes-UnterhemdDrawable"),
-                UnterhemdTexture = player.GetData("SetClothes-UnterhemdTexture")
+                UnterhemdDrawable = 0,//player.GetData("SetClothes-UnterhemdDrawable"),
+                UnterhemdTexture = 0//player.GetData("SetClothes-UnterhemdTexture")
             };
 
             player.SetData("SetClothes-Geschlecht", null);
@@ -50,19 +81,19 @@ namespace Server.resources.rsf.Commands
             player.SetData("SetClothes-Texture", null);
             player.SetData("SetClothes-TorsoDrawable", null);
             player.SetData("SetClothes-TorsoTexture", null);
-            player.SetData("SetClothes-UnterhemdDrawable", null);
-            player.SetData("SetClothes-UnterhemdTexture", null);
+            /*player.SetData("SetClothes-UnterhemdDrawable", null);
+            player.SetData("SetClothes-UnterhemdTexture", null);*/
 
             player.ResetData("SetClothes-Geschlecht");
             player.ResetData("SetClothes-TorsoDrawable");
-            player.ResetData("SetClothes-UnterhemdDrawable");
+            //player.ResetData("SetClothes-UnterhemdDrawable");
 
             ctx.Clothes.Add(clothes);
             ctx.SaveChanges();
             player.SendChatMessage($"Kleidung gespeichert. Id: {clothes.Id}");
         }
 
-        [Command]
+/*        [Command]
         public void Unterhemd(Client player, int unterhemd)
         {
             AccountModel acc = player.GetData("User");
@@ -79,7 +110,7 @@ namespace Server.resources.rsf.Commands
             player.SetClothes(8, unterhemd, 0);
             player.SetData("SetClothes-UnterhemdDrawable", unterhemd);
             player.SetData("SetClothes-UnterhemdTexture", 0);
-        }
+        }*/
 
         [Command]
         public void SetClothes(Client player, int texture)
@@ -124,7 +155,8 @@ namespace Server.resources.rsf.Commands
             player.SetData("SetClothes-Texture", texture);
             player.SetClothes(11, drawable, texture);
 
-            player.SendChatMessage("Nun /unterhemd [ID] /torso [ID]");
+//            player.SendChatMessage("Nun /unterhemd [ID] /torso [ID]");
+            player.SendChatMessage("Nun /torso [ID]");
             player.SendChatMessage("Wenn es passt: /speichern, wenn nicht /setclothes [Texture-ID]");
 
 
@@ -137,17 +169,130 @@ namespace Server.resources.rsf.Commands
         }
 
         [Command]
+        public void Unterhemd(Client player, int id)
+        {
+            player.SetClothes(8, id, 0);
+        }
+
+        [Command]
+        public void Hose(Client player, int id)
+        {
+            player.SetClothes(4, id, 0);
+        }
+
+        [Command]
         public void Torso(Client player, int id)
         {
             AccountModel acc = player.GetData("User");
             if (id > 15)
             {
                 player.SendChatMessage("Maximal 15 Körper.");
-                return;
+//                return;
             }
             player.SetClothes(3, id, 0);
             player.SetData("SetClothes-TorsoDrawable", id);
             player.SetData("SetClothes-TorsoTexture", 0);
+        }
+
+        [Command]
+        public void Livery(Client player, int livery)
+        {
+            if (!player.IsInVehicle) return;
+            Fahrzeug fahrzeug = player.Vehicle.GetData("Fahrzeug");
+            fahrzeug.SetLivery(livery);
+        }
+
+        [Command]
+        public void AddExtra(Client player, int extra, bool state)
+        {
+            if (!player.IsInVehicle) return;
+            Fahrzeug fahrzeug = player.Vehicle.GetData("Fahrzeug");
+            fahrzeug.AddExtra(extra, state);
+            player.SendChatMessage("Extra übernommen");
+        }
+
+        [Command("deletefrakcar")]
+        public void DeleteFrakCar(Client player)
+        {
+            if (!player.IsInVehicle) return;
+            if (player.VehicleSeat != -1)
+            {
+                player.SendChatMessage("Du bist nicht der Fahrer");
+                return;
+            }
+
+            if (!player.Vehicle.HasData("Fraktionsfahrzeug"))
+            {
+                player.SendChatMessage("Ist kein Fraktionsfahrzeug..");
+                return;
+            }
+            FraktionsfahrzeugModel fahrzeug = player.Vehicle.GetData("Fraktionsfahrzeug");
+            using var ctx = new DefaultDbContext();
+            fahrzeug.Vehicle.Delete();
+            ctx.Fraktionsfahrzeug.Remove(fahrzeug);
+            ctx.SaveChanges();
+            player.SendChatMessage("Fraktionsfahrzeug gelöscht amk..");
+        }
+
+        [Command("savefrakcar", GreedyArg = true)]
+        public void SaveFrakCar(Client player, string name)
+        {
+            if (!player.IsInVehicle) return;
+            if (player.VehicleSeat != -1)
+            {
+                player.SendChatMessage("Du bist nicht der Fahrer");
+                return;
+            }
+
+            using var ctx = new DefaultDbContext();
+            var frak = ctx.Fraktionen.FirstOrDefault(t => string.Equals(t.Short, name, StringComparison.CurrentCultureIgnoreCase) || string.Equals(t.Name, name, StringComparison.CurrentCultureIgnoreCase));
+            if (frak == null)
+            {
+                player.SendChatMessage("Existiert nicht amk.");
+                return;
+            }
+
+            Fahrzeug fahrzeug = player.Vehicle.GetData("Fahrzeug");
+            var ffahrzeug = new FraktionsfahrzeugModel
+            {
+                FraktionenModelId = frak.Id,
+                Dimension = player.Dimension,
+                Livery = fahrzeug.Livery,
+                NumberPlate = $"{frak.Short}{frak.Id}",
+                Name = fahrzeug.Name,
+                PosX = fahrzeug.Vehicle.Position.X,
+                PosY = fahrzeug.Vehicle.Position.Y,
+                PosZ = fahrzeug.Vehicle.Position.Z,
+                Engine = false,
+                Locked = false,
+                RotX = fahrzeug.Vehicle.Rotation.X,
+                RotY = fahrzeug.Vehicle.Rotation.Y,
+                RotZ = fahrzeug.Vehicle.Rotation.Z,
+                PrimaryColor = fahrzeug.PrimaryColor,
+                SecondaryColor = fahrzeug.SecondaryColor
+            };
+            ctx.Fraktionsfahrzeug.Add(ffahrzeug);
+            ctx.SaveChanges();
+            NAPI.Task.Run(() =>
+            {
+                ffahrzeug.Spawn();
+            }, 10000);
+            player.SendChatMessage("Gespeichert..");
+            player.SendChatMessage("In 10s wird es gespawnt amk..");
+        }
+
+        [Command("fixveh")]
+        public void FixvehCmd(Client player)
+        {
+            if (!player.IsInVehicle) return;
+            player.Vehicle.Repair();
+            player.SendChatMessage("Repariert..");
+        }
+
+        [Command("dimension")]
+        public void DimensionCmd(Client player)
+        {
+            NAPI.Util.ConsoleOutput($"{player.Dimension}");
         }
 
         [Command("veh", Alias = "v")]
@@ -156,17 +301,20 @@ namespace Server.resources.rsf.Commands
             if (farbe1 < 0) farbe1 = Main.Zufall.Next(0, 159);
             if (farbe2 < 0) farbe2 = Main.Zufall.Next(0, 159);
 
-            var fahrzeug = new Fahrzeug();
-            fahrzeug.PosX = player.Position.X;
-            fahrzeug.PosY = player.Position.Y;
-            fahrzeug.PosZ = player.Position.Z;
-            fahrzeug.RotX = player.Rotation.X;
-            fahrzeug.RotY = player.Rotation.Y;
-            fahrzeug.RotZ = player.Rotation.Z;
-            fahrzeug.Dimension = player.Dimension;
-            fahrzeug.PrimaryColor = farbe1;
-            fahrzeug.SecondaryColor = farbe2;
-            fahrzeug.Name = name;
+            var fahrzeug = new Fahrzeug
+            {
+                PosX = player.Position.X,
+                PosY = player.Position.Y,
+                PosZ = player.Position.Z,
+                RotX = player.Rotation.X,
+                RotY = player.Rotation.Y,
+                RotZ = player.Rotation.Z,
+                Dimension = player.Dimension,
+                PrimaryColor = farbe1,
+                SecondaryColor = farbe2,
+                NumberPlate = "Admin",
+                Name = name
+            };
             fahrzeug.Spawn();
             AdminVehicle.Add(fahrzeug);
             player.SetIntoVehicle(fahrzeug.Vehicle, -1);

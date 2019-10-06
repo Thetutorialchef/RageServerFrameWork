@@ -19,15 +19,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20190930151429_SocialClubName.cs" />
-    <Compile Remove="Migrations\20190930151429_SocialClubName.Designer.cs" />
-    <Compile Remove="Migrations\20190930153509_MaxCharaktere.cs" />
-    <Compile Remove="Migrations\20190930153509_MaxCharaktere.Designer.cs" />
-    <Compile Remove="Migrations\20191005105108_Test.cs" />
-    <Compile Remove="Migrations\20191005105108_Test.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="BCrypt-Core" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.6">

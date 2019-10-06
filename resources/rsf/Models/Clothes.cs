@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using GTANetworkAPI;
-using rsf.Database;
 
 namespace Server.resources.rsf.Models
 {

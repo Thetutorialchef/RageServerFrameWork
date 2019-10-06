@@ -1,8 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using GTANetworkAPI;
 using Newtonsoft.Json.Linq;
+using rsf.Database;
 using rsf.Models;
+using Server.resources.rsf.Models;
 
 namespace rsf
 {
@@ -32,6 +35,26 @@ namespace rsf
             NAPI.Server.SetAutoSpawnOnConnect(false);
             NAPI.Server.SetAutoRespawnAfterDeath(false);
 
+            using var ctx = new DefaultDbContext();
+            foreach (var frak in ctx.Fraktionen)
+            {
+                for (var i = 0; i < frak.MaxRaenge; i++)
+                {
+                    if (ctx.Fraktionsraenge.FirstOrDefault(t => t.FraktionenModelId == frak.Id && t.Rang == i + 1) != null) continue;
+                    var rang = new FraktionsraengeModel
+                    {
+                        FraktionenModelId = frak.Id, Rang = (byte) (i + 1), Name = $"Rang {i + 1}"
+                    };
+                    ctx.Fraktionsraenge.Add(rang);
+                }
+            }
+            ctx.SaveChanges();
+
+            foreach (var fahrzeug in ctx.Fraktionsfahrzeug)
+            {
+                fahrzeug.Spawn();
+            }
+
             // NAPI.Server.SetCommandErrorMessage("[~r~SERVER:~w~] Dieser Command Existiert nicht!");
         }
 
@@ -53,7 +76,22 @@ namespace rsf
                 acc.Character.RotZ = player.Rotation.Z;
 
             }, 1000);
+        }
 
+        [RemoteEvent("OnSwitchBlinker")]
+        public void OnSwitchBlinker(Client player, bool blinkerL)
+        {
+            if (!player.IsInVehicle || player.VehicleSeat != -1 || !player.Vehicle.HasData("Fahrzeug")) return;
+
+            Fahrzeug fahrzeug = player.Vehicle.GetData("Fahrzeug");
+            if (blinkerL)
+                fahrzeug.BlinkerL = !fahrzeug.BlinkerL;
+            else
+                fahrzeug.BlinkerR = !fahrzeug.BlinkerR;
+            foreach (var player2 in NAPI.Player.GetPlayersInRadiusOfPlayer((int)Config.GetValue("stream-distance"), player))
+                player2.TriggerEvent("OnPlayerBlinker", fahrzeug.Vehicle, blinkerL, blinkerL ? fahrzeug.BlinkerL : fahrzeug.BlinkerR);
+            fahrzeug.Vehicle.SetSharedData("BlinkerL", fahrzeug.BlinkerL);
+            fahrzeug.Vehicle.SetSharedData("BlinkerR", fahrzeug.BlinkerR);
 
         }
     }

@@ -31,6 +31,10 @@ namespace rsf.Database
         public DbSet<CharacterBlendModel> CharacterBlend { get; set; }
         public DbSet<CharacterFeaturesModel> CharacterFeatures { get; set; }
         public DbSet<Clothes> Clothes { get; set; }
+        public DbSet<FraktionenModel> Fraktionen { get; set; }
+        public DbSet<FraktionskasseModel> Fraktionskasse { get; set; }
+        public DbSet<FraktionsraengeModel> Fraktionsraenge { get; set; }
+        public DbSet<FraktionsfahrzeugModel> Fraktionsfahrzeug { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

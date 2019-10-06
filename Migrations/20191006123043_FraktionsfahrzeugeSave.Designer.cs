@@ -9,8 +9,8 @@ using rsf.Database;
 namespace Server.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    [Migration("20191004184342_Frisur")]
-    partial class Frisur
+    [Migration("20191006123043_FraktionsfahrzeugeSave")]
+    partial class FraktionsfahrzeugeSave
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -97,6 +97,128 @@ namespace Server.Migrations
                     b.HasIndex("CharacterModelId");
 
                     b.ToTable("CharacterFeatures");
+                });
+
+            modelBuilder.Entity("Server.resources.rsf.Models.Clothes", b =>
+                {
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Drawable");
+
+                    b.Property<bool>("Geschlecht");
+
+                    b.Property<int>("Texture");
+
+                    b.Property<int>("TorsoDrawable");
+
+                    b.Property<int>("TorsoTexture");
+
+                    b.Property<int>("UnterhemdDrawable");
+
+                    b.Property<int>("UnterhemdTexture");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clothes");
+                });
+
+            modelBuilder.Entity("Server.resources.rsf.Models.FraktionenModel", b =>
+                {
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<byte>("MaxRaenge");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Short");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Fraktionen");
+                });
+
+            modelBuilder.Entity("Server.resources.rsf.Models.FraktionsfahrzeugModel", b =>
+                {
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("BlinkerL");
+
+                    b.Property<bool>("BlinkerR");
+
+                    b.Property<uint>("Dimension");
+
+                    b.Property<bool>("Engine");
+
+                    b.Property<uint>("FraktionenModelId");
+
+                    b.Property<int>("Livery");
+
+                    b.Property<bool>("Locked");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("NumberPlate");
+
+                    b.Property<float>("PosX");
+
+                    b.Property<float>("PosY");
+
+                    b.Property<float>("PosZ");
+
+                    b.Property<int>("PrimaryColor");
+
+                    b.Property<float>("RotX");
+
+                    b.Property<float>("RotY");
+
+                    b.Property<float>("RotZ");
+
+                    b.Property<int>("SecondaryColor");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FraktionenModelId");
+
+                    b.ToTable("Fraktionsfahrzeug");
+                });
+
+            modelBuilder.Entity("Server.resources.rsf.Models.FraktionskasseModel", b =>
+                {
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<double>("Betrag");
+
+                    b.Property<uint>("FraktionenModelId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FraktionenModelId");
+
+                    b.ToTable("Fraktionskasse");
+                });
+
+            modelBuilder.Entity("Server.resources.rsf.Models.FraktionsraengeModel", b =>
+                {
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<double>("Betrag");
+
+                    b.Property<uint>("FraktionenModelId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<byte>("Rang");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FraktionenModelId");
+
+                    b.ToTable("Fraktionsraenge");
                 });
 
             modelBuilder.Entity("rsf.Models.AccountModel", b =>
@@ -272,6 +394,10 @@ namespace Server.Migrations
 
                     b.Property<int>("Frisur");
 
+                    b.Property<byte>("FrisurFarbe");
+
+                    b.Property<byte>("FrisurHighlights");
+
                     b.Property<byte>("Lipstick");
 
                     b.Property<float>("LipstickOpacity");
@@ -326,6 +452,30 @@ namespace Server.Migrations
                     b.HasOne("rsf.Models.CharacterModel", "CharacterModel")
                         .WithMany()
                         .HasForeignKey("CharacterModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Server.resources.rsf.Models.FraktionsfahrzeugModel", b =>
+                {
+                    b.HasOne("Server.resources.rsf.Models.FraktionenModel", "FraktionenModel")
+                        .WithMany()
+                        .HasForeignKey("FraktionenModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Server.resources.rsf.Models.FraktionskasseModel", b =>
+                {
+                    b.HasOne("Server.resources.rsf.Models.FraktionenModel", "FraktionenModel")
+                        .WithMany()
+                        .HasForeignKey("FraktionenModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Server.resources.rsf.Models.FraktionsraengeModel", b =>
+                {
+                    b.HasOne("Server.resources.rsf.Models.FraktionenModel", "FraktionenModel")
+                        .WithMany()
+                        .HasForeignKey("FraktionenModelId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

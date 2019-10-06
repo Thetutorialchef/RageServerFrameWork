@@ -2,22 +2,22 @@
 
 namespace Server.Migrations
 {
-    public partial class FrisurHighlights : Migration
+    public partial class VehicleExtraSync : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<byte>(
-                name: "FrisurHighlights",
-                table: "CharacterOverlay",
+            migrationBuilder.AddColumn<int>(
+                name: "Livery",
+                table: "Fraktionsfahrzeug",
                 nullable: false,
-                defaultValue: (byte)0);
+                defaultValue: 0);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "FrisurHighlights",
-                table: "CharacterOverlay");
+                name: "Livery",
+                table: "Fraktionsfahrzeug");
         }
     }
 }

@@ -9,8 +9,8 @@ using rsf.Database;
 namespace Server.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    [Migration("20191004190814_Frisur2")]
-    partial class Frisur2
+    [Migration("20191005220248_Fraktionen")]
+    partial class Fraktionen
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -97,6 +97,44 @@ namespace Server.Migrations
                     b.HasIndex("CharacterModelId");
 
                     b.ToTable("CharacterFeatures");
+                });
+
+            modelBuilder.Entity("Server.resources.rsf.Models.Clothes", b =>
+                {
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Drawable");
+
+                    b.Property<bool>("Geschlecht");
+
+                    b.Property<int>("Texture");
+
+                    b.Property<int>("TorsoDrawable");
+
+                    b.Property<int>("TorsoTexture");
+
+                    b.Property<int>("UnterhemdDrawable");
+
+                    b.Property<int>("UnterhemdTexture");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clothes");
+                });
+
+            modelBuilder.Entity("Server.resources.rsf.Models.FraktionenModel", b =>
+                {
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<byte>("MaxRaenge");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Fraktionen");
                 });
 
             modelBuilder.Entity("rsf.Models.AccountModel", b =>
@@ -273,6 +311,8 @@ namespace Server.Migrations
                     b.Property<int>("Frisur");
 
                     b.Property<byte>("FrisurFarbe");
+
+                    b.Property<byte>("FrisurHighlights");
 
                     b.Property<byte>("Lipstick");
 

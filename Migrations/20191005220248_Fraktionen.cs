@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Server.Migrations
 {
-    public partial class BlendOverlayAusgelagert : Migration
+    public partial class Fraktionen : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,6 +27,39 @@ namespace Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Accounts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Clothes",
+                columns: table => new
+                {
+                    Id = table.Column<uint>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Drawable = table.Column<int>(nullable: false),
+                    Texture = table.Column<int>(nullable: false),
+                    TorsoDrawable = table.Column<int>(nullable: false),
+                    TorsoTexture = table.Column<int>(nullable: false),
+                    UnterhemdDrawable = table.Column<int>(nullable: false),
+                    UnterhemdTexture = table.Column<int>(nullable: false),
+                    Geschlecht = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clothes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Fraktionen",
+                columns: table => new
+                {
+                    Id = table.Column<uint>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    MaxRaenge = table.Column<byte>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Fraktionen", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,18 +118,54 @@ namespace Server.Migrations
                     ShapeFirst = table.Column<byte>(nullable: false),
                     ShapeMix = table.Column<float>(nullable: false),
                     ShapeSecond = table.Column<byte>(nullable: false),
-                    ShapeThird = table.Column<byte>(nullable: false),
                     SkinFirst = table.Column<byte>(nullable: false),
                     SkinMix = table.Column<float>(nullable: false),
-                    SkinSecond = table.Column<byte>(nullable: false),
-                    SkinThird = table.Column<byte>(nullable: false),
-                    ThirdMix = table.Column<float>(nullable: false)
+                    SkinSecond = table.Column<byte>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CharacterBlend", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CharacterBlend_Characters_CharacterModelId",
+                        column: x => x.CharacterModelId,
+                        principalTable: "Characters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CharacterFeatures",
+                columns: table => new
+                {
+                    Id = table.Column<uint>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CharacterModelId = table.Column<uint>(nullable: false),
+                    Nasenbreite = table.Column<float>(nullable: false),
+                    Nasenhoehe = table.Column<float>(nullable: false),
+                    Nasenlaenge = table.Column<float>(nullable: false),
+                    Nasenruecken = table.Column<float>(nullable: false),
+                    Nasenspitze = table.Column<float>(nullable: false),
+                    Nasenrueckenverschiebung = table.Column<float>(nullable: false),
+                    Brauenhoehe = table.Column<float>(nullable: false),
+                    Brauenbreite = table.Column<float>(nullable: false),
+                    Wangenknochenhoehe = table.Column<float>(nullable: false),
+                    Wangenknochenbreite = table.Column<float>(nullable: false),
+                    Wangenbreite = table.Column<float>(nullable: false),
+                    Augen = table.Column<float>(nullable: false),
+                    Lippen = table.Column<float>(nullable: false),
+                    Backenbreite = table.Column<float>(nullable: false),
+                    Backenhoehe = table.Column<float>(nullable: false),
+                    Kinnlaenge = table.Column<float>(nullable: false),
+                    Kinnposition = table.Column<float>(nullable: false),
+                    Kinnbreite = table.Column<float>(nullable: false),
+                    Kinnform = table.Column<float>(nullable: false),
+                    Halsbreite = table.Column<float>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CharacterFeatures", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CharacterFeatures_Characters_CharacterModelId",
                         column: x => x.CharacterModelId,
                         principalTable: "Characters",
                         principalColumn: "Id",
@@ -159,7 +228,9 @@ namespace Server.Migrations
                     BodyBlemishPrimaryColor = table.Column<byte>(nullable: false),
                     BodyBlemishSecondaryColor = table.Column<byte>(nullable: false),
                     BodyBlemishOpacity = table.Column<float>(nullable: false),
-                    AddBodyBlemish = table.Column<byte>(nullable: false)
+                    Frisur = table.Column<int>(nullable: false),
+                    FrisurFarbe = table.Column<byte>(nullable: false),
+                    FrisurHighlights = table.Column<byte>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -175,6 +246,11 @@ namespace Server.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_CharacterBlend_CharacterModelId",
                 table: "CharacterBlend",
+                column: "CharacterModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CharacterFeatures_CharacterModelId",
+                table: "CharacterFeatures",
                 column: "CharacterModelId");
 
             migrationBuilder.CreateIndex(
@@ -194,7 +270,16 @@ namespace Server.Migrations
                 name: "CharacterBlend");
 
             migrationBuilder.DropTable(
+                name: "CharacterFeatures");
+
+            migrationBuilder.DropTable(
                 name: "CharacterOverlay");
+
+            migrationBuilder.DropTable(
+                name: "Clothes");
+
+            migrationBuilder.DropTable(
+                name: "Fraktionen");
 
             migrationBuilder.DropTable(
                 name: "Characters");
